@@ -58,3 +58,9 @@ frontend/dist/
 .claude
 tmp
 CLAUDE.md
+
+*exercise.py
+STUDENT_PROFILE.md
+exercise/STUDENT_PROFILE.md
+exercise/python/*.py
+exercise/typescript/*.ts
