@@ -121,12 +121,13 @@ async def clean_text(request: CleanRequest):
 
 @app.post("/api/process-agent")
 async def process_with_agent(request: AgentRequest):
-    """Agentic processing endpoint - agent autonomously selects and executes tools."""
+    """PydanticAI agent processing - type-safe tool selection and execution."""
     if not service:
         raise HTTPException(status_code=503, detail="Service not ready")
 
     try:
-        result = service.process_with_agent(request.text)
+        # Now async - PydanticAI uses async/await
+        result = await service.process_with_agent(request.text)
         return {"success": True, **result}
 
     except Exception as e:

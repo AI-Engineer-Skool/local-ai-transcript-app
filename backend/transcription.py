@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-OpenAI API-compatible transcription service.
-Works with OpenRouter, Ollama, OpenAI, LM Studio, and other providers.
+Transcription service using Whisper + PydanticAI agent.
+
+This version uses PydanticAI for type-safe, validated LLM interactions
+instead of raw OpenAI function calling.
 """
 
 from pathlib import Path
@@ -9,15 +11,14 @@ from pathlib import Path
 from faster_whisper import WhisperModel
 from openai import OpenAI
 
-from agent import Agent
-from tools import CalendarTool, DecisionRecordTool, IncidentTool, ToolRegistry
+from agent import process_transcript
 
 PROMPT_FILE = Path(__file__).parent / "system_prompt.txt"
 SYSTEM_PROMPT = PROMPT_FILE.read_text().strip()
 
 
 class TranscriptionService:
-    """Transcription service using Whisper + LLM with agentic workflow."""
+    """Transcription service using Whisper + PydanticAI agent."""
 
     def __init__(
         self, whisper_model: str, llm_base_url: str, llm_api_key: str, llm_model: str
@@ -25,7 +26,7 @@ class TranscriptionService:
         print(f"🔄 Loading Whisper model '{whisper_model}'...")
         self.whisper = WhisperModel(
             whisper_model,
-            device="auto",  # Auto-detect: Metal (Mac), CUDA (NVIDIA), or CPU
+            device="auto",
             compute_type="int8",
         )
         print(f"✅ Whisper model '{whisper_model}' loaded!")
@@ -33,6 +34,7 @@ class TranscriptionService:
         print(f"🔄 Connecting to LLM at {llm_base_url}...")
         print(f"    Using model: {llm_model}")
 
+        # Keep OpenAI client for simple LLM cleaning (non-agentic)
         self.llm_client = OpenAI(base_url=llm_base_url, api_key=llm_api_key)
         self.llm_model = llm_model
 
@@ -45,10 +47,12 @@ class TranscriptionService:
             print(f"⚠️  Warning: Could not connect to LLM: {e}")
             print(f"   Make sure your LLM server is running at {llm_base_url}")
 
-        # Set up the agent with tools
-        self._setup_agent()
+        # PydanticAI agent is initialized lazily in agent.py
+        print("🤖 PydanticAI agent ready (lazy initialization)")
+        print("✅ Service ready!\n")
 
     def transcribe(self, audio_file):
+        """Transcribe audio to text using Whisper."""
         print("🔄 Transcribing...")
 
         segments, _info = self.whisper.transcribe(
@@ -59,32 +63,24 @@ class TranscriptionService:
         print(f"📝 Raw: {text}")
         return text
 
-    def _setup_agent(self):
-        """Initialize the agent with the meeting processing tool."""
-        print("\n🔧 Setting up agent...")
-
-        tool_registry = ToolRegistry()
-        tool_registry.register(CalendarTool())
-        tool_registry.register(IncidentTool())
-        tool_registry.register(DecisionRecordTool())
-
-        self.agent = Agent(
-            llm_client=self.llm_client,
-            model=self.llm_model,
-            tool_registry=tool_registry,
-        )
-
-        print("✅ Agent ready!\n")
-
     def get_default_system_prompt(self):
         """Get the default system prompt for text cleaning."""
         return SYSTEM_PROMPT
 
-    def process_with_agent(self, text: str) -> dict:
-        """Process transcript using agentic workflow."""
-        return self.agent.process_transcript(text)
+    async def process_with_agent(self, text: str) -> dict:
+        """Process transcript using PydanticAI agent.
+
+        This is now async because PydanticAI uses async/await.
+        The agent automatically:
+        - Analyzes the transcript
+        - Selects appropriate tools
+        - Validates inputs with Pydantic models
+        - Executes tools and generates summary
+        """
+        return await process_transcript(text)
 
     def clean_with_llm(self, text, system_prompt=None):
+        """Simple LLM cleaning (non-agentic, for basic transcript cleanup)."""
         if not text:
             return ""
 
@@ -112,6 +108,7 @@ class TranscriptionService:
             return text
 
     def transcribe_file(self, audio_file_path: str, use_llm: bool = True) -> dict:
+        """Transcribe audio file and optionally clean with LLM."""
         raw_text = self.transcribe(audio_file_path)
 
         result = {"raw_text": raw_text}
