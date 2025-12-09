@@ -56,6 +56,7 @@ Create a curriculum outline with:
 4. **Both Python and TypeScript versions** (where applicable)
 
 **IMPORTANT Recommendations:**
+
 - **Suggest students start with Python first**: Python's simpler syntax makes it easier to focus on core programming concepts. TypeScript exercises should be completed after Python ones.
 - **TypeScript exercises should emphasize types**: Use TypeScript's type system as a teaching tool. Include type annotations, interfaces, and type safety concepts in every TypeScript exercise.
 
@@ -88,6 +89,7 @@ Exercise 4: Personal Records Tracker
 For each exercise, create files with this structure:
 
 **IMPORTANT**:
+
 - Place all Python files in `exercise/python/` using naming pattern: `##_descriptive_name.py` (e.g., `01_gym_basics.py`, `02_workout_sets.py`)
 - Place all TypeScript files in `exercise/typescript/` using naming pattern: `##_descriptive_name.ts` (e.g., `01_gym_basics.ts`, `02_workout_sets.ts`)
 - The number prefix ensures files sort correctly in directory listings
@@ -161,6 +163,7 @@ if __name__ == "__main__":
 ### TypeScript File Template
 
 **CRITICAL**: TypeScript exercises should balance explicit type annotations with teaching type inference:
+
 - **Explicit annotations** help beginners understand what types are and make code self-documenting
 - **Type inference** should be explained as TypeScript's powerful feature that provides type safety even without annotations
 - Early exercises should demonstrate BOTH approaches to build complete understanding
@@ -241,6 +244,9 @@ if __name__ == "__main__":
 // DO NOT add ANY messages after this section - no congratulations, no "next steps",
 // no "you've completed X", nothing. This applies to ALL exercises including the final one.
 // The exercise should end cleanly after providing test cases/expected output.
+
+// Make this file a module to avoid variable name conflicts with other exercise files
+export {};
 ```
 
 ### Key Principles for Exercise Content
@@ -261,6 +267,7 @@ if __name__ == "__main__":
 4. **Runnable Code**: Exercises should be executable immediately, with clear TODOs that students complete
 
 5. **TypeScript Type Emphasis**: TypeScript exercises MUST teach type safety
+
    - **Teach both explicit annotations AND type inference**:
      - Show explicit annotations: `const name: string = "Alex"`
      - Explain inference: `const age = 28  // TypeScript infers age: number`
@@ -346,6 +353,11 @@ After generating all files:
 - **Python**: All exercises should be placed in `exercise/python/` using naming pattern `##_descriptive_name.py` and work with `uv run exercise/python/##_file.py`
 - **TypeScript**: All exercises should be placed in `exercise/typescript/` using naming pattern `##_descriptive_name.ts` and be runnable with `node exercise/typescript/##_file.ts`
   - A `tsconfig.json` is already configured in the `exercise/typescript/` directory with strict mode enabled
+  - **IMPORTANT**: Every TypeScript exercise file MUST end with `export {};` to make it a module. This prevents variable name conflicts between exercise files when TypeScript compiles them together.
+  - **CRITICAL: BROWSER-COMPATIBLE TYPESCRIPT ONLY**: TypeScript exercises must use only browser-compatible APIs. Do NOT use server-side modules like `fs`, `path`, `process`, or `Buffer`. This keeps exercises simple and avoids extra dependencies.
+    - Use in-memory data structures and `console.log` for output
+    - For data persistence concepts, use `JSON.stringify`/`JSON.parse` (which works in browsers and is used for localStorage, APIs, etc.)
+    - Exercises should run with plain TypeScript without additional type packages
   - **IMPORTANT**: TypeScript exercises should teach BOTH explicit type annotations AND type inference
     - Demonstrate explicit annotations: `const name: string = "value"`
     - Explain type inference: `const count = 5  // TypeScript infers number`
@@ -354,13 +366,14 @@ After generating all files:
   - Use interfaces/types for complex data structures
   - Leverage TypeScript's type system to teach students about type safety and catching errors at compile-time
 - **No External Dependencies Initially**: First few exercises should use standard library only
-- **Later Exercises**: You may introduce common packages if appropriate for skill level
+- **Later Exercises**: You may introduce common packages if appropriate for skill level (but still NO Node.js-specific APIs)
 
 ## Example Meta-Commentary Phrases
 
 Sprinkle these throughout exercises:
 
 **General (Python & TypeScript):**
+
 - "Stuck on this TODO? Try asking: 'How do I [specific task]?'"
 - "If [concept] is unclear, ask me: 'Explain [concept] using a [theme] example'"
 - "Need a hint? Ask: 'What's the first step for TODO X?'"
@@ -369,6 +382,7 @@ Sprinkle these throughout exercises:
 - "Ready to level up? Ask: 'What's a more advanced way to do this?'"
 
 **TypeScript-Specific (emphasize types):**
+
 - "Type hint: You can add explicit type annotations OR let TypeScript infer the type!"
 - "Try it: Create a variable without a type annotation and hover over it to see the inferred type"
 - "Type challenge: What happens if you assign a different type to an inferred variable?"

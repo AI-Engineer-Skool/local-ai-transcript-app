@@ -1,35 +1,38 @@
 /**
- * Exercise 6: Complete Gym Simulator with File I/O
+ * Exercise 6: Complete Gym Simulator with Data Serialization
  *
  * This is the final exercise - bringing EVERYTHING together! You'll build a complete
- * gym simulator using types, interfaces, classes, and FILE I/O. This demonstrates
+ * gym simulator using types, interfaces, classes, and DATA SERIALIZATION. This demonstrates
  * how TypeScript's type system scales to real-world applications.
  *
+ * JSON serialization is the technique used to store data in browsers (localStorage)
+ * or send data to APIs - you'll use this constantly in frontend development!
+ *
  * Concepts covered:
- * - File I/O with Node.js (fs module)
- * - JSON serialization with types
+ * - JSON serialization with types (JSON.stringify/JSON.parse)
+ * - Type-safe data structures for storage
  * - Error handling (try/catch)
  * - Complex class systems
  * - Type safety in a full application
  * - Bringing together all TypeScript concepts
  *
- * Run this exercise: node exercise/typescript/06_gym_simulator.ts
+ * Run this exercise: npx tsx exercise/typescript/06_gym_simulator.ts
  */
 
-import * as fs from "fs";
-
 // ============================================================================
-// QUICK INTRO: File I/O in TypeScript
+// QUICK INTRO: JSON Serialization in TypeScript
 // ============================================================================
-// TypeScript works with Node.js's fs (file system) module:
+// JSON (JavaScript Object Notation) is how we save and load data:
 //
-// - fs.writeFileSync(path, data) - saves data to a file
-// - fs.readFileSync(path, 'utf8') - reads data from a file
 // - JSON.stringify(object) - converts object to JSON string
-// - JSON.parse(string) - converts JSON string to object
-// - try/catch - handles errors (like file not found)
+// - JSON.parse(string) - converts JSON string back to object
+// - try/catch - handles errors (like invalid JSON)
 //
-// The key TypeScript feature: You can TYPE the data you're saving/loading!
+// The key TypeScript feature: You can TYPE the data you're serializing!
+// You'll use this constantly for:
+// - Saving to localStorage in browsers
+// - Sending/receiving data from APIs
+// - Storing user preferences and app state
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -98,9 +101,7 @@ class GymMember {
     const now = new Date();
     const timeStr = now.toTimeString().split(" ")[0] ?? "00:00:00";
     const dateStr =
-      now.toISOString().split("T")[0] +
-      " " +
-      timeStr.slice(0, 5);
+      now.toISOString().split("T")[0] + " " + timeStr.slice(0, 5);
 
     const workout: Workout = {
       date: dateStr,
@@ -113,7 +114,7 @@ class GymMember {
 
     this.workouts.push(workout);
     this.totalVisits++;
-    console.log(`✓ Logged workout for ${this.name}: ${exercise}`);
+    console.log(`  Logged workout for ${this.name}: ${exercise}`);
   }
 
   /**
@@ -129,7 +130,8 @@ class GymMember {
   }
 
   /**
-   * Convert to plain object for JSON saving.
+   * Convert to plain object for JSON serialization.
+   * This pattern is used for saving to localStorage or sending to APIs.
    */
   toData(): MemberData {
     return {
@@ -142,6 +144,7 @@ class GymMember {
 
   /**
    * Create from plain object (for loading from JSON).
+   * Static factory method pattern.
    */
   static fromData(data: MemberData): GymMember {
     const member = new GymMember(data.name, data.membershipId);
@@ -192,9 +195,10 @@ class Gym {
   }
 
   /**
-   * Save gym data to a JSON file.
+   * Serialize gym data to JSON string.
+   * In a real app, this could be saved to localStorage or sent to an API.
    */
-  saveToFile(filename: string): void {
+  toJSON(): string {
     const membersObj: { [id: number]: MemberData } = {};
     this.members.forEach((member, id) => {
       membersObj[id] = member.toData();
@@ -206,21 +210,15 @@ class Gym {
       members: membersObj,
     };
 
-    try {
-      const jsonString = JSON.stringify(data, null, 2);
-      fs.writeFileSync(filename, jsonString, "utf8");
-      console.log(`✓ Gym data saved to ${filename}`);
-    } catch (error) {
-      console.log(`✗ Error saving file: ${error}`);
-    }
+    return JSON.stringify(data, null, 2);
   }
 
   /**
-   * Load gym data from a JSON file.
+   * Load gym data from a JSON string.
+   * Returns true if successful, false if there was an error.
    */
-  loadFromFile(filename: string): void {
+  loadFromJSON(jsonString: string): boolean {
     try {
-      const jsonString = fs.readFileSync(filename, "utf8");
       const data: GymData = JSON.parse(jsonString);
 
       this.name = data.gymName;
@@ -235,15 +233,11 @@ class Gym {
         }
       }
 
-      console.log(`✓ Loaded gym data from ${filename}`);
-      console.log(`  Gym: ${this.name} with ${this.members.size} members`);
+      console.log(`Loaded gym: ${this.name} with ${this.members.size} members`);
+      return true;
     } catch (error) {
-      const nodeError = error as { code?: string };
-      if (nodeError.code === "ENOENT") {
-        console.log(`✗ File ${filename} not found. Starting fresh!`);
-      } else {
-        console.log(`✗ Error loading file: ${error}`);
-      }
+      console.log(`Error loading data: ${error}`);
+      return false;
     }
   }
 }
@@ -273,8 +267,19 @@ for (const member of myGym.getAllMembers()) {
   console.log(member.getSummary());
 }
 
-console.log();
-myGym.saveToFile("gym_data.json");
+// Demonstrate serialization
+console.log("\n=== Serialized Gym Data (JSON) ===");
+const gymJson = myGym.toJSON();
+console.log(gymJson);
+
+// Demonstrate loading from JSON
+console.log("\n=== Loading from JSON ===");
+const newGym = new Gym("Empty Gym");
+newGym.loadFromJSON(gymJson);
+console.log("\nLoaded member summaries:");
+for (const member of newGym.getAllMembers()) {
+  console.log(member.getSummary());
+}
 
 // ============================================================================
 // YOUR TURN: TODO EXERCISES
@@ -344,22 +349,28 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 
 // Write your code here:
 
-// TODO 6: Save your gym data
-// Call saveToFile with filename "my_gym_data.json"
-// After running, check that the file was created!
+// TODO 6: Serialize your gym data
+// Call toJSON() on your gym and store the result
+// Print the JSON string to see your gym data serialized
 //
-// Type hint: yourGym.saveToFile("my_gym_data.json");
+// Type hint: const jsonData: string = yourGym.toJSON();
 //
-// Need help? Ask: "How do I save data to a file in TypeScript?"
+// This is the same format you'd use to:
+// - Save to localStorage in a browser
+// - Send to an API endpoint
+// - Store in a database
+//
+// Need help? Ask: "How do I convert an object to JSON in TypeScript?"
 
 // Write your code here:
 
-// TODO 7: Test loading data (Optional - requires running twice)
-// Comment out TODOs 1-6, then create a NEW empty gym
-// and try loading from "my_gym_data.json" using loadFromFile()
+// TODO 7: Test loading data from JSON
+// Create a NEW empty gym (different name)
+// Load your serialized JSON data using loadFromJSON()
 // Print all member summaries to verify it loaded correctly
 //
-// This demonstrates data persistence across program runs!
+// This demonstrates data persistence - the data survives being
+// serialized and deserialized!
 //
 // Want to see it work? Ask: "How do I test loading saved data?"
 
@@ -395,14 +406,18 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 
 // Write your code here:
 
-// BONUS 3: Create a generic save/load utility
-// Create functions with proper typing:
-// - saveJSON<T>(filename: string, data: T): void
-// - loadJSON<T>(filename: string): T | undefined
+// BONUS 3: Simulate localStorage (advanced)
+// Create a simple in-memory "storage" object:
+// const storage: { [key: string]: string } = {};
 //
-// These are GENERIC functions that work with any type!
+// Create functions:
+// - saveToStorage(key: string, data: string): void
+// - loadFromStorage(key: string): string | undefined
 //
-// This is advanced TypeScript! Ask: "How do generics work in TypeScript?"
+// Use these to "save" and "load" your gym data by key
+// This simulates how localStorage works in browsers!
+//
+// Ask: "How does localStorage work in browsers?"
 
 // Write your code here:
 
@@ -414,7 +429,8 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 // - A gym with at least 2 members
 // - Multiple workouts logged for each member
 // - Member summaries showing visits and total volume
-// - A "my_gym_data.json" file created
+// - JSON output showing serialized gym data
+// - A second gym loaded from that JSON data
 //
 // TypeScript ensures:
 // - All method parameters have correct types
@@ -423,27 +439,16 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 // - JSON data matches expected structure
 //
 // Key learning points:
-// - TypeScript provides type safety for file I/O
-// - Interfaces define data structure for serialization
+// - TypeScript provides type safety for data serialization
+// - Interfaces define data structure for JSON
 // - Optional types (T | undefined) require checking
 // - Type system scales to complex applications
 // - All the concepts work together seamlessly
 //
-// To verify your work:
-// 1. Run the file: node exercise/typescript/06_gym_simulator.ts
-// 2. Check for "my_gym_data.json" in exercise/typescript/
-// 3. Open the JSON file - it should be readable
-// 4. Try loading it back (TODO 7)
-//
-// Congratulations! You've completed all TypeScript exercises!
-// You now understand:
-// - Basic types and type inference
-// - Arrays and typed collections
-// - Interfaces and type aliases
-// - Functions with type signatures
-// - Classes with typed properties and methods
-// - File I/O with type safety
-// - Building complete applications with TypeScript
+// Real-world applications:
+// - Browser localStorage: localStorage.setItem("gym", gym.toJSON())
+// - API calls: fetch("/api/gym", { body: gym.toJSON() })
+// - State management: Redux/Zustand use similar patterns
 //
 // If you get type errors:
 // - Read the error message carefully
