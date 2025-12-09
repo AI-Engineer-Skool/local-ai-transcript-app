@@ -8,6 +8,7 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from agent_agui import create_agui_app
 from transcription import TranscriptionService
 
 load_dotenv()
@@ -16,10 +17,6 @@ load_dotenv()
 class CleanRequest(BaseModel):
     text: str
     system_prompt: str | None = None
-
-
-class AgentRequest(BaseModel):
-    text: str
 
 
 service = None
@@ -53,6 +50,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount AG-UI app for streaming agent processing
+# This replaces the old /api/process-agent endpoint with real-time streaming
+agui_app = create_agui_app()
+app.mount("/api/agent", agui_app)
 
 
 @app.get("/api/status")
@@ -119,19 +121,6 @@ async def clean_text(request: CleanRequest):
         raise HTTPException(status_code=500, detail=f"Cleaning failed: {str(e)}") from e
 
 
-@app.post("/api/process-agent")
-async def process_with_agent(request: AgentRequest):
-    """PydanticAI agent processing - type-safe tool selection and execution."""
-    if not service:
-        raise HTTPException(status_code=503, detail="Service not ready")
-
-    try:
-        # Now async - PydanticAI uses async/await
-        result = await service.process_with_agent(request.text)
-        return {"success": True, **result}
-
-    except Exception as e:
-        print(f"❌ Agentic processing error: {e}")
-        raise HTTPException(
-            status_code=500, detail=f"Agent processing failed: {str(e)}"
-        ) from e
+# NOTE: The /api/process-agent endpoint has been replaced by AG-UI streaming
+# Agent processing is now handled by the AGUIApp mounted at /api/agent
+# which provides real-time streaming of text, tool calls, and state updates

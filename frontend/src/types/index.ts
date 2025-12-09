@@ -251,3 +251,60 @@ export interface DecisionRecordProps {
   markdownContent: string;
   data: DecisionRecordData;
 }
+
+// =============================================================================
+// AG-UI Streaming Types
+// =============================================================================
+
+/**
+ * State synchronized from backend via AG-UI STATE_SNAPSHOT events.
+ * Mirrors the AgentState model in backend/models.py.
+ */
+export interface AgentState {
+  tool_results: ToolResult[];
+  current_tool: string | null;
+  processing_status: 'idle' | 'analyzing' | 'executing' | 'complete';
+  current_date: string;
+  one_week_from_now: string;
+}
+
+/**
+ * State managed by the useAgentStream hook.
+ * Combines streaming text, agent state, and UI state.
+ */
+export interface StreamingState {
+  isStreaming: boolean;
+  textContent: string;
+  agentState: AgentState | null;
+  currentTool: string | null;
+  completedTools: string[];
+  error: string | null;
+}
+
+/**
+ * Props for the StreamingText component.
+ */
+export interface StreamingTextProps {
+  content: string;
+  isStreaming: boolean;
+}
+
+/**
+ * Props for the ToolCallProgress component.
+ */
+export interface ToolCallProgressProps {
+  currentTool: string | null;
+  completedTools: string[];
+}
+
+/**
+ * Extended AgentResultsProps for streaming support.
+ * Supports both legacy (non-streaming) and new (streaming) modes.
+ */
+export interface StreamingAgentResultsProps extends AgentResultsProps {
+  isStreaming?: boolean;
+  streamingText?: string;
+  agentState?: AgentState | null;
+  currentTool?: string | null;
+  completedTools?: string[];
+}

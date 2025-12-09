@@ -9,6 +9,7 @@ import { TranscriptionResults } from './components/TranscriptionResults';
 import { AgentResults } from './components/AgentResults';
 import { ErrorMessage } from './components/ErrorMessage';
 import { Footer } from './components/Footer';
+import { useAgentStream } from './hooks/useAgentStream';
 
 interface TranscriptionResponse {
   success: boolean;
@@ -26,28 +27,6 @@ interface CleanResponse {
   error?: string;
 }
 
-interface ToolCall {
-  name: string;
-  input: Record<string, unknown>;
-}
-
-interface ToolResult {
-  status: string;
-  type?: string;
-  file_path?: string;
-  filename?: string;
-  data?: Record<string, unknown>;
-  message?: string;
-}
-
-interface AgentResponse {
-  success: boolean;
-  tool_calls?: ToolCall[];
-  results?: ToolResult[];
-  summary?: string;
-  error?: string;
-}
-
 function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -61,9 +40,19 @@ function App() {
   const [isLoadingPrompt, setIsLoadingPrompt] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const [isCleaningWithLLM, setIsCleaningWithLLM] = useState(false);
-  const [isProcessingAgent, setIsProcessingAgent] = useState(false);
-  const [agentResults, setAgentResults] = useState<AgentResponse | null>(null);
   const [isOriginalExpanded, setIsOriginalExpanded] = useState(true);
+
+  // AG-UI streaming hook for real-time agent updates
+  const {
+    isStreaming,
+    textContent: streamingText,
+    agentState,
+    currentTool,
+    completedTools,
+    error: streamingError,
+    runAgent,
+    reset: resetStreaming,
+  } = useAgentStream();
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -87,35 +76,14 @@ function App() {
     void loadSystemPrompt();
   }, []);
 
-  const processWithAgent = useCallback(async (text: string) => {
-    try {
-      setIsProcessingAgent(true);
-      setAgentResults(null);
-
-      const response = await fetch('/api/process-agent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ text }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Agent processing failed: ${response.statusText}`);
-      }
-
-      const data = (await response.json()) as AgentResponse;
-      setAgentResults(data);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-      setAgentResults({
-        success: false,
-        error: errorMessage,
-      });
-    } finally {
-      setIsProcessingAgent(false);
-    }
-  }, []);
+  // Process with AG-UI streaming agent
+  const processWithAgent = useCallback(
+    async (text: string) => {
+      resetStreaming();
+      await runAgent(text);
+    },
+    [runAgent, resetStreaming]
+  );
 
   const uploadAudio = useCallback(
     async (audioBlob: Blob) => {
@@ -211,13 +179,13 @@ function App() {
       setError(null);
       setRawText(null);
       setCleanedText(null);
-      setAgentResults(null);
+      resetStreaming();
       setIsCleaningWithLLM(false);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       setError('Microphone access denied: ' + errorMessage);
     }
-  }, [uploadAudio]);
+  }, [uploadAudio, resetStreaming]);
 
   const stopRecording = useCallback(() => {
     if (mediaRecorderRef.current && isRecording) {
@@ -238,7 +206,7 @@ function App() {
     setError(null);
     setRawText(null);
     setCleanedText(null);
-    setAgentResults(null);
+    resetStreaming();
     setIsProcessing(true);
     setIsCleaningWithLLM(false);
 
@@ -276,7 +244,7 @@ function App() {
         setError(null);
         setRawText(null);
         setCleanedText(null);
-        setAgentResults(null);
+        resetStreaming();
         setIsProcessing(true);
         setIsCleaningWithLLM(false);
 
@@ -324,7 +292,7 @@ function App() {
         setIsCleaningWithLLM(false);
       }
     },
-    [useLLM, useAgent, systemPrompt, processWithAgent]
+    [useLLM, useAgent, systemPrompt, processWithAgent, resetStreaming]
   );
 
   const copyToClipboard = (text: string) => {
@@ -433,11 +401,13 @@ function App() {
         />
 
         <AgentResults
-          toolCalls={agentResults?.tool_calls}
-          results={agentResults?.results}
-          summary={agentResults?.summary}
-          error={agentResults?.error}
-          isProcessing={isProcessingAgent}
+          // Streaming props (AG-UI)
+          isStreaming={isStreaming}
+          streamingText={streamingText}
+          agentState={agentState}
+          currentTool={currentTool}
+          completedTools={completedTools}
+          error={streamingError || undefined}
         />
 
         <Footer />

@@ -246,3 +246,29 @@ class AgentDeps:
     one_week_from_now: str
     current_day: str
     tool_results: list[dict[str, Any]] = field(default_factory=list)
+
+
+# =============================================================================
+# AG-UI State Model - synchronized to frontend via state events
+# =============================================================================
+
+
+class AgentState(BaseModel):
+    """State shared between agent and frontend via AG-UI protocol.
+
+    This state is synchronized in real-time through STATE_SNAPSHOT events,
+    allowing the frontend to display progressive results as tools execute.
+
+    Attributes:
+        tool_results: List of rich tool execution results with content, markdown, etc.
+        current_tool: Name of the currently executing tool (for progress indicators)
+        processing_status: Current phase of processing (idle, analyzing, executing, complete)
+        current_date: Today's date in YYYY-MM-DD format (for tool context)
+        one_week_from_now: Date one week from now (for default reminder dates)
+    """
+
+    tool_results: list[dict[str, Any]] = Field(default_factory=list)
+    current_tool: str | None = None
+    processing_status: str = "idle"
+    current_date: str = ""
+    one_week_from_now: str = ""

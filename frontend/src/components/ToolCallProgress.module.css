@@ -1,0 +1,52 @@
+/**
+ * ToolCallProgress component styles
+ *
+ * Features:
+ * - Vertical list of tool execution states
+ * - Green checkmarks for completed tools
+ * - Spinning loader for active tool
+ * - Professional, understated appearance
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-3);
+}
+
+.completed {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
+}
+
+.checkIcon {
+  flex-shrink: 0;
+}
+
+.running {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+}
+
+.spinner {
+  flex-shrink: 0;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -18,6 +18,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@ag-ui/client": "^0.0.42",
     "lucide-react": "^0.552.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

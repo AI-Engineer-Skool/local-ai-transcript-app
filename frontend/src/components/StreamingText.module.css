@@ -1,0 +1,39 @@
+/**
+ * StreamingText component styles
+ *
+ * Features:
+ * - Clean, readable text display
+ * - Animated blinking cursor during streaming
+ * - Professional appearance matching design system
+ */
+
+.container {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.text {
+  /* Smooth appearance */
+}
+
+.cursor {
+  display: inline-block;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  animation: blink 1s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
