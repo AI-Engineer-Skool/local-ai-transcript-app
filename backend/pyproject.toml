@@ -12,6 +12,7 @@ dependencies = [
     "python-multipart>=0.0.9",
     "openai>=1.0.0",
     "python-dotenv>=1.0.0",
+    "pydantic-ai>=0.1.0",  # Type-safe LLM interactions
 ]
 
 [project.optional-dependencies]

@@ -89,19 +89,17 @@ Open **two terminals** and run:
 
 ```bash
 cd backend
-uv sync && uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000 --timeout-keep-alive 600
+uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000 --timeout-keep-alive 600
 ```
 
-> **Note:** `uv sync` ensures dependencies are up-to-date (useful after switching branches).`--timeout-keep-alive 600` sets a 10-minute timeout for long audio processing.
+> **Note:** `--timeout-keep-alive 600` sets a 10-minute timeout for long audio processing
 
 **Terminal 2 - Frontend:**
 
 ```bash
 cd frontend
-npm install && npm run dev
+npm run dev
 ```
-
-> **Note:** `npm install` ensures dependencies are up-to-date (useful after switching branches).
 
 **Browser:** Open `http://localhost:3000`
 
