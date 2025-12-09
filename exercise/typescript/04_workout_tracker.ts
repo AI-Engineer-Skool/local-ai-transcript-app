@@ -55,19 +55,19 @@ type VolumeCalculator = (reps: number, weight: number) => number;
  * @returns The volume (reps × weight)
  */
 function calculateVolume(reps: number, weight: number): number {
-    const volume = reps * weight;
-    return volume;
+  const volume = reps * weight;
+  return volume;
 }
 
 /**
  * Calculate total volume across multiple sets.
  */
 function calculateTotalVolume(reps: number[], weights: number[]): number {
-    let total = 0;
-    for (let i = 0; i < reps.length; i++) {
-        total += calculateVolume(reps[i], weights[i]);
-    }
-    return total;
+  let total = 0;
+  for (let i = 0; i < reps.length; i++) {
+    total += calculateVolume(reps[i], weights[i]);
+  }
+  return total;
 }
 
 /**
@@ -75,33 +75,32 @@ function calculateTotalVolume(reps: number[], weights: number[]): number {
  * The void return type means this function doesn't return anything.
  */
 function displayWorkoutSummary(
-    exerciseName: string,
-    reps: number[],
-    weights: number[]
+  exerciseName: string,
+  reps: number[],
+  weights: number[]
 ): void {
-    
-    console.log(`\n=== ${exerciseName} Summary ===`);
-    console.log(`Sets completed: ${reps.length}`);
-    console.log(`Total reps: ${reps.reduce((sum, r) => sum + r, 0)}`);
+  console.log(`\n=== ${exerciseName} Summary ===`);
+  console.log(`Sets completed: ${reps.length}`);
+  console.log(`Total reps: ${reps.reduce((sum, r) => sum + r, 0)}`);
 
-    const totalVol = calculateTotalVolume(reps, weights);
-    console.log(`Total volume: ${totalVol} lbs`);
+  const totalVol = calculateTotalVolume(reps, weights);
+  console.log(`Total volume: ${totalVol} lbs`);
 
-    console.log("\nSet breakdown:");
-    for (let i = 0; i < reps.length; i++) {
-        console.log(`  Set ${i + 1}: ${reps[i]} reps × ${weights[i]} lbs`);
-    }
+  console.log("\nSet breakdown:");
+  for (let i = 0; i < reps.length; i++) {
+    console.log(`  Set ${i + 1}: ${reps[i]} reps × ${weights[i]} lbs`);
+  }
 }
 
 /**
  * Function with optional parameter (uses ?)
  */
 function logWorkout(exercise: string, sets: number, reps?: number): void {
-    if (reps !== undefined) {
-        console.log(`Logged: ${sets} sets of ${reps} reps of ${exercise}`);
-    } else {
-        console.log(`Logged: ${sets} sets of ${exercise}`);
-    }
+  if (reps !== undefined) {
+    console.log(`Logged: ${sets} sets of ${reps} reps of ${exercise}`);
+  } else {
+    console.log(`Logged: ${sets} sets of ${exercise}`);
+  }
 }
 
 // Test the functions
@@ -123,7 +122,7 @@ displayWorkoutSummary("Bench Press", benchReps, benchWeights);
 
 console.log();
 logWorkout("Squats", 5, 5); // With reps
-logWorkout("Plank", 3);      // Without reps (optional)
+logWorkout("Plank", 3); // Without reps (optional)
 
 // ============================================================================
 // YOUR TURN: TODO EXERCISES
@@ -145,11 +144,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 
 // Write your code here:
 
-
-
-
-
-
 // TODO 2: Test your calculateOneRepMax function
 // Call your function with weight=225, reps=5
 // Store the result in a variable with explicit type: number
@@ -160,10 +154,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 // Need help? Ask: "How do I call a typed function in TypeScript?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 3: Create a function with void return type
 // Create a function called logWorkoutSession that:
@@ -177,11 +167,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 
 // Write your code here:
 
-
-
-
-
-
 // TODO 4: Test your logWorkoutSession function
 // Call it with: "Deadlift", 5, 5
 // Then call it again with different values
@@ -191,10 +176,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 // Need help? Ask: "How do I call a function that returns void?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 5: Create a function to calculate workout duration
 // Create a function called calculateWorkoutDuration with:
@@ -209,12 +190,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 
 // Write your code here:
 
-
-
-
-
-
-
 // TODO 6: Test workout duration function with explicit typing
 // Call calculateWorkoutDuration with: 5 sets, 90 seconds rest, 30 seconds work
 // Store result in a variable with explicit number type
@@ -225,10 +200,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 // Need help? Ask: "How do I store and use a function's return value?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 7: Create a function with optional parameters
 // Create a function called trackWorkout with:
@@ -245,12 +216,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 
 // Write your code here:
 
-
-
-
-
-
-
 // TODO 8: Test the optional parameter function
 // Call trackWorkout twice:
 // 1. With notes: "Bench Press", 3, "Felt strong today"
@@ -261,10 +226,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 // Need help? Ask: "How do I call a function with optional parameters?"
 
 // Write your code here:
-
-
-
-
 
 // ============================================================================
 // BONUS CHALLENGES (Optional)
@@ -288,12 +249,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 
 // Write your code here:
 
-
-
-
-
-
-
 // BONUS 2: Create a function with a union type parameter
 // Create a function called formatWeight that takes:
 // - weight: number | string (can be either!)
@@ -306,12 +261,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 // Want guidance? Ask: "How do I use union types in function parameters?"
 
 // Write your code here:
-
-
-
-
-
-
 
 // BONUS 3: Create a higher-order function
 // Create a function called createVolumeCalculator that:
@@ -329,12 +278,6 @@ console.log("\n\n=== YOUR WORKOUT TRACKER ===");
 // Need help? Ask: "What are higher-order functions in TypeScript?"
 
 // Write your code here:
-
-
-
-
-
-
 
 // ============================================================================
 // TESTING YOUR CODE

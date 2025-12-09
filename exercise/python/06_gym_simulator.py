@@ -44,6 +44,7 @@ from datetime import datetime
 # EXAMPLE CODE
 # ============================================================================
 
+
 class GymMember:
     """Represents a gym member with workout history."""
 
@@ -61,7 +62,7 @@ class GymMember:
             "sets": sets,
             "reps": reps,
             "weight": weight,
-            "volume": sets * reps * weight
+            "volume": sets * reps * weight,
         }
         self.workouts.append(workout)
         self.total_visits += 1
@@ -81,7 +82,7 @@ class GymMember:
             "name": self.name,
             "membership_id": self.membership_id,
             "workouts": self.workouts,
-            "total_visits": self.total_visits
+            "total_visits": self.total_visits,
         }
 
     @staticmethod
@@ -119,11 +120,11 @@ class Gym:
         data = {
             "gym_name": self.name,
             "next_member_id": self.next_member_id,
-            "members": {mid: member.to_dict() for mid, member in self.members.items()}
+            "members": {mid: member.to_dict() for mid, member in self.members.items()},
         }
 
         try:
-            with open(filename, 'w') as f:
+            with open(filename, "w") as f:
                 json.dump(data, f, indent=2)
             print(f"✓ Gym data saved to {filename}")
         except Exception as e:
@@ -132,7 +133,7 @@ class Gym:
     def load_from_file(self, filename):
         """Load gym data from a JSON file."""
         try:
-            with open(filename, 'r') as f:
+            with open(filename, "r") as f:
                 data = json.load(f)
 
             self.name = data["gym_name"]
@@ -193,8 +194,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Write your code here:
 
 
-
-
 # TODO 2: Add yourself as a member
 # Use the add_member method to add yourself to the gym
 # Store your member ID in a variable called my_member_id
@@ -204,8 +203,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Need help? Ask: "How do I call a method on an object and store the result?"
 
 # Write your code here:
-
-
 
 
 # TODO 3: Log three different workouts
@@ -221,9 +218,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Write your code here:
 
 
-
-
-
 # TODO 4: Add another member and log their workout
 # Add a friend or workout partner to your gym
 # Log at least one workout for them
@@ -231,9 +225,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Need help? Ask: "Show me the pattern for adding a member and logging workouts"
 
 # Write your code here:
-
-
-
 
 
 # TODO 5: Print summaries of all members
@@ -247,8 +238,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Write your code here:
 
 
-
-
 # TODO 6: Save your gym data
 # Save your gym data to a file called "my_gym_data.json"
 # Use the save_to_file method
@@ -260,8 +249,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Write your code here:
 
 
-
-
 # TODO 7: Test loading data (Optional - requires running twice)
 # Comment out TODOs 1-6 above, then create a new empty gym
 # and try loading from "my_gym_data.json" using load_from_file()
@@ -270,8 +257,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Want to see it work? Ask: "How do I test loading saved data?"
 
 # Write your code here:
-
-
 
 
 # ============================================================================
@@ -288,8 +273,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Write your code here:
 
 
-
-
 # BONUS 2: Add workout statistics
 # Add a method to GymMember called get_workout_stats() that returns:
 # - Total workouts logged
@@ -300,8 +283,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # Want guidance? Ask: "How do I calculate statistics from a list of dictionaries?"
 
 # Write your code here:
-
-
 
 
 # BONUS 3: Create a simple menu system
@@ -315,8 +296,6 @@ print("\n\n=== YOUR GYM SIMULATOR ===\n")
 # HINT: Use input() to get user choices, and a while loop to keep running
 
 # Write your code here:
-
-
 
 
 # ============================================================================

@@ -50,7 +50,9 @@ print()
 
 # We can access individual sets using their index (position)
 print("First set:", reps_per_set[0], "reps at", weights[0], "lbs")
-print("Last set:", reps_per_set[-1], "reps at", weights[-1], "lbs")  # -1 means last item
+print(
+    "Last set:", reps_per_set[-1], "reps at", weights[-1], "lbs"
+)  # -1 means last item
 print()
 
 # FOR LOOPS: Repeat an action for each item in a list

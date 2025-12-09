@@ -40,10 +40,10 @@
 
 // Define the structure of an exercise
 interface Exercise {
-    name: string;
-    muscleGroup: string;
-    equipment: string;
-    difficulty: string;
+  name: string;
+  muscleGroup: string;
+  equipment: string;
+  difficulty: string;
 }
 
 // You can also use type aliases (similar to interfaces for simple cases)
@@ -51,12 +51,12 @@ type DifficultyLevel = "Beginner" | "Intermediate" | "Advanced"; // Union type!
 
 // A more advanced interface with optional properties
 interface DetailedExercise {
-    name: string;
-    muscleGroup: string;
-    equipment: string;
-    difficulty: DifficultyLevel; // Using our type alias
-    repsRange?: string; // Optional property (notice the ?)
-    notes?: string; // Optional property
+  name: string;
+  muscleGroup: string;
+  equipment: string;
+  difficulty: DifficultyLevel; // Using our type alias
+  repsRange?: string; // Optional property (notice the ?)
+  notes?: string; // Optional property
 }
 
 // ============================================================================
@@ -65,10 +65,10 @@ interface DetailedExercise {
 
 // Create an object that matches the Exercise interface
 const benchPress: Exercise = {
-    name: "Bench Press",
-    muscleGroup: "Chest",
-    equipment: "Barbell",
-    difficulty: "Intermediate"
+  name: "Bench Press",
+  muscleGroup: "Chest",
+  equipment: "Barbell",
+  difficulty: "Intermediate",
 };
 
 // TypeScript checks that all required properties exist and have correct types!
@@ -84,12 +84,12 @@ console.log();
 
 // An object with optional properties
 const pullUp: DetailedExercise = {
-    name: "Pull Up",
-    muscleGroup: "Back",
-    equipment: "Pull-up Bar",
-    difficulty: "Advanced",
-    repsRange: "5-10", // Optional property included
-    notes: "Use full range of motion" // Optional property included
+  name: "Pull Up",
+  muscleGroup: "Back",
+  equipment: "Pull-up Bar",
+  difficulty: "Advanced",
+  repsRange: "5-10", // Optional property included
+  notes: "Use full range of motion", // Optional property included
 };
 
 console.log("Pull Up notes:", pullUp.notes);
@@ -97,28 +97,28 @@ console.log("Pull Up notes:", pullUp.notes);
 // Creating a library - an object where values are Exercise objects
 // This is like Python's nested dictionaries, but with full type safety!
 interface ExerciseLibrary {
-    [key: string]: Exercise; // Index signature: any string key -> Exercise value
+  [key: string]: Exercise; // Index signature: any string key -> Exercise value
 }
 
 const exerciseLibrary: ExerciseLibrary = {
-    bench_press: {
-        name: "Bench Press",
-        muscleGroup: "Chest",
-        equipment: "Barbell",
-        difficulty: "Intermediate"
-    },
-    squat: {
-        name: "Squat",
-        muscleGroup: "Legs",
-        equipment: "Barbell",
-        difficulty: "Intermediate"
-    },
-    pull_up: {
-        name: "Pull Up",
-        muscleGroup: "Back",
-        equipment: "Pull-up Bar",
-        difficulty: "Advanced"
-    }
+  bench_press: {
+    name: "Bench Press",
+    muscleGroup: "Chest",
+    equipment: "Barbell",
+    difficulty: "Intermediate",
+  },
+  squat: {
+    name: "Squat",
+    muscleGroup: "Legs",
+    equipment: "Barbell",
+    difficulty: "Intermediate",
+  },
+  pull_up: {
+    name: "Pull Up",
+    muscleGroup: "Back",
+    equipment: "Pull-up Bar",
+    difficulty: "Advanced",
+  },
 };
 
 console.log("=== Exercise Library ===");
@@ -135,8 +135,8 @@ console.log();
 // Loop through all exercises
 console.log("All exercises:");
 for (const key in exerciseLibrary) {
-    const ex = exerciseLibrary[key];
-    console.log(`  → ${ex.name} - ${ex.muscleGroup} (${ex.difficulty})`);
+  const ex = exerciseLibrary[key];
+  console.log(`  → ${ex.name} - ${ex.muscleGroup} (${ex.difficulty})`);
 }
 
 // ============================================================================
@@ -157,9 +157,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 
 // Write your code here:
 
-
-
-
 // TODO 2: Create an object using your WorkoutSet interface
 // Create a variable called firstSet of type WorkoutSet with:
 // - reps: 10
@@ -174,10 +171,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 // Need help? Ask: "How do I create an object that implements an interface?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 3: Create an Exercise object for deadlift
 // Create a variable called deadlift of type Exercise with:
@@ -194,10 +187,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 
 // Write your code here:
 
-
-
-
-
 // TODO 4: Add deadlift to the exercise library
 // Add your deadlift to the exerciseLibrary object
 // Use the key "deadlift"
@@ -209,9 +198,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 // Need help? Ask: "How do I add a property to an object in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // TODO 5: Create and add a shoulder press exercise
 // Create a new Exercise object for shoulder press inline (without a separate variable)
@@ -229,9 +215,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 
 // Write your code here:
 
-
-
-
 // TODO 6: Print all exercise names
 // Loop through exerciseLibrary and print just the name of each exercise
 // Use a for...in loop or Object.values()
@@ -241,10 +224,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 // Need help? Ask: "How do I loop through an object's values in TypeScript?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 7: Find chest exercises with type-safe filtering
 // Loop through exerciseLibrary and print exercises where muscleGroup is "Chest"
@@ -257,10 +236,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 // Stuck? Ask: "How do I filter objects based on a property in TypeScript?"
 
 // Write your code here:
-
-
-
-
 
 // ============================================================================
 // BONUS CHALLENGES (Optional)
@@ -278,9 +253,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 
 // Write your code here:
 
-
-
-
 // BONUS 2: Create a type for equipment categories
 // Create a union type called EquipmentType that can only be:
 // "Barbell" | "Dumbbell" | "Machine" | "Bodyweight" | "Cable"
@@ -293,9 +265,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 // Want guidance? Ask: "How do I create a union type in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // BONUS 3: Create a function with interface parameters
 // Create a function called displayExercise that:
@@ -312,9 +281,6 @@ console.log("\n=== YOUR EXERCISE LIBRARY ===");
 // Need help? Ask: "How do I use an interface as a function parameter?"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // TESTING YOUR CODE

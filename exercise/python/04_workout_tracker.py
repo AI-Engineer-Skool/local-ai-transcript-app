@@ -160,9 +160,6 @@ print("\n\n=== YOUR WORKOUT TRACKER ===")
 # Write your code here:
 
 
-
-
-
 # TODO 4: Test your log_workout function
 # Call log_workout with:
 # - exercise_name: "Deadlift"
@@ -172,8 +169,6 @@ print("\n\n=== YOUR WORKOUT TRACKER ===")
 # Need help? Ask: "How do I call a function with multiple arguments?"
 
 # Write your code here:
-
-
 
 
 # TODO 5: Create a function to calculate workout duration
@@ -207,8 +202,6 @@ print("\n\n=== YOUR WORKOUT TRACKER ===")
 # Write your code here:
 
 
-
-
 # ============================================================================
 # BONUS CHALLENGES (Optional)
 # ============================================================================
@@ -223,8 +216,6 @@ print("\n\n=== YOUR WORKOUT TRACKER ===")
 # For help: Ask "How do I compare two values and return different strings?"
 
 # Write your code here:
-
-
 
 
 # BONUS 2: Create a comprehensive workout report function
@@ -242,8 +233,6 @@ print("\n\n=== YOUR WORKOUT TRACKER ===")
 # Write your code here:
 
 
-
-
 # BONUS 3: Create a rest recommendation function
 # Create a function called recommend_rest_time that takes a weight parameter
 # and returns recommended rest time in seconds:
@@ -254,8 +243,6 @@ print("\n\n=== YOUR WORKOUT TRACKER ===")
 # Need help? Ask: "How do I use if/elif/else in a function?"
 
 # Write your code here:
-
-
 
 
 # ============================================================================

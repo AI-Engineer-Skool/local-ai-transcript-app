@@ -92,10 +92,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 
 // Write your code here:
 
-
-
-
-
 // TODO 2: Now try using TYPE INFERENCE
 // Create similar variables but WITHOUT type annotations (let TypeScript infer):
 // - Use names like: inferredExercise, inferredMuscle, inferredSets, inferredReps, inferredWeight
@@ -112,10 +108,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 
 // Write your code here:
 
-
-
-
-
 // TODO 3: Calculate and display total reps with explicit types
 // Create a variable totalSquatReps with an explicit number type
 // Calculate: squatSets × squatReps (using your variables from TODO 1)
@@ -127,9 +119,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 
 // Write your code here:
 
-
-
-
 // TODO 4: Create a summary using a template literal
 // Create a workoutSummary variable (you choose: explicit type or inference!)
 // Use a template literal (backticks and ${}) to create a message like:
@@ -140,9 +129,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 // Need help? Ask: "How do I use template literals in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // TODO 5: Track rest time and calculate total rest in minutes
 // Create a restSeconds variable (number type - your choice on explicit vs inference)
@@ -156,9 +142,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 // Stuck? Ask: "How do I convert seconds to minutes in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // BONUS CHALLENGES (Optional)
@@ -175,9 +158,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 
 // Write your code here:
 
-
-
-
 // BONUS 2: Experiment with type errors
 // Try creating a variable with type inference, then try to assign a wrong type:
 // let active = true;
@@ -190,9 +170,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 
 // Write your code here:
 
-
-
-
 // BONUS 3: Create a complete workout report with mixed typing
 // Use a combination of explicit types and inference to create variables for:
 // - Exercise name, muscle group, sets, reps, weight
@@ -203,9 +180,6 @@ console.log("\n=== YOUR WORKOUT LOG ===");
 // Get creative! Ask: "Show me how to format multi-line output in TypeScript"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // TESTING YOUR CODE

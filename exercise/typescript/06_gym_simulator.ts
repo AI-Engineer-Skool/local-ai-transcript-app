@@ -16,7 +16,7 @@
  * Run this exercise: node exercise/typescript/06_gym_simulator.ts
  */
 
-import * as fs from 'fs';
+import * as fs from "fs";
 
 // ============================================================================
 // QUICK INTRO: File I/O in TypeScript
@@ -39,31 +39,31 @@ import * as fs from 'fs';
  * Represents a single workout session.
  */
 interface Workout {
-    date: string;
-    exercise: string;
-    sets: number;
-    reps: number;
-    weight: number;
-    volume: number;
+  date: string;
+  exercise: string;
+  sets: number;
+  reps: number;
+  weight: number;
+  volume: number;
 }
 
 /**
  * Saved member data structure.
  */
 interface MemberData {
-    name: string;
-    membershipId: number;
-    workouts: Workout[];
-    totalVisits: number;
+  name: string;
+  membershipId: number;
+  workouts: Workout[];
+  totalVisits: number;
 }
 
 /**
  * Saved gym data structure.
  */
 interface GymData {
-    gymName: string;
-    nextMemberId: number;
-    members: { [id: number]: MemberData };
+  gymName: string;
+  nextMemberId: number;
+  members: { [id: number]: MemberData };
 }
 
 // ============================================================================
@@ -74,167 +74,174 @@ interface GymData {
  * Represents a gym member with workout history.
  */
 class GymMember {
-    name: string;
-    membershipId: number;
-    workouts: Workout[];
-    totalVisits: number;
+  name: string;
+  membershipId: number;
+  workouts: Workout[];
+  totalVisits: number;
 
-    constructor(name: string, membershipId: number) {
-        this.name = name;
-        this.membershipId = membershipId;
-        this.workouts = [];
-        this.totalVisits = 0;
+  constructor(name: string, membershipId: number) {
+    this.name = name;
+    this.membershipId = membershipId;
+    this.workouts = [];
+    this.totalVisits = 0;
+  }
+
+  /**
+   * Log a workout session.
+   */
+  logWorkout(
+    exercise: string,
+    sets: number,
+    reps: number,
+    weight: number
+  ): void {
+    const now = new Date();
+    const dateStr =
+      now.toISOString().split("T")[0] +
+      " " +
+      now.toTimeString().split(" ")[0].slice(0, 5);
+
+    const workout: Workout = {
+      date: dateStr,
+      exercise: exercise,
+      sets: sets,
+      reps: reps,
+      weight: weight,
+      volume: sets * reps * weight,
+    };
+
+    this.workouts.push(workout);
+    this.totalVisits++;
+    console.log(`✓ Logged workout for ${this.name}: ${exercise}`);
+  }
+
+  /**
+   * Get member summary.
+   */
+  getSummary(): string {
+    if (this.workouts.length === 0) {
+      return `${this.name} - No workouts logged yet`;
     }
 
-    /**
-     * Log a workout session.
-     */
-    logWorkout(exercise: string, sets: number, reps: number, weight: number): void {
-        const now = new Date();
-        const dateStr = now.toISOString().split('T')[0] + ' ' +
-                        now.toTimeString().split(' ')[0].slice(0, 5);
+    const totalVolume = this.workouts.reduce((sum, w) => sum + w.volume, 0);
+    return `${this.name} - ${this.totalVisits} visits - ${totalVolume} lbs total volume`;
+  }
 
-        const workout: Workout = {
-            date: dateStr,
-            exercise: exercise,
-            sets: sets,
-            reps: reps,
-            weight: weight,
-            volume: sets * reps * weight
-        };
+  /**
+   * Convert to plain object for JSON saving.
+   */
+  toData(): MemberData {
+    return {
+      name: this.name,
+      membershipId: this.membershipId,
+      workouts: this.workouts,
+      totalVisits: this.totalVisits,
+    };
+  }
 
-        this.workouts.push(workout);
-        this.totalVisits++;
-        console.log(`✓ Logged workout for ${this.name}: ${exercise}`);
-    }
-
-    /**
-     * Get member summary.
-     */
-    getSummary(): string {
-        if (this.workouts.length === 0) {
-            return `${this.name} - No workouts logged yet`;
-        }
-
-        const totalVolume = this.workouts.reduce((sum, w) => sum + w.volume, 0);
-        return `${this.name} - ${this.totalVisits} visits - ${totalVolume} lbs total volume`;
-    }
-
-    /**
-     * Convert to plain object for JSON saving.
-     */
-    toData(): MemberData {
-        return {
-            name: this.name,
-            membershipId: this.membershipId,
-            workouts: this.workouts,
-            totalVisits: this.totalVisits
-        };
-    }
-
-    /**
-     * Create from plain object (for loading from JSON).
-     */
-    static fromData(data: MemberData): GymMember {
-        const member = new GymMember(data.name, data.membershipId);
-        member.workouts = data.workouts;
-        member.totalVisits = data.totalVisits;
-        return member;
-    }
+  /**
+   * Create from plain object (for loading from JSON).
+   */
+  static fromData(data: MemberData): GymMember {
+    const member = new GymMember(data.name, data.membershipId);
+    member.workouts = data.workouts;
+    member.totalVisits = data.totalVisits;
+    return member;
+  }
 }
 
 /**
  * Represents the entire gym.
  */
 class Gym {
-    name: string;
-    private members: Map<number, GymMember>; // Map: key type -> value type
-    private nextMemberId: number;
+  name: string;
+  private members: Map<number, GymMember>; // Map: key type -> value type
+  private nextMemberId: number;
 
-    constructor(name: string) {
-        this.name = name;
-        this.members = new Map();
-        this.nextMemberId = 1;
+  constructor(name: string) {
+    this.name = name;
+    this.members = new Map();
+    this.nextMemberId = 1;
+  }
+
+  /**
+   * Add a new member.
+   */
+  addMember(name: string): number {
+    const memberId = this.nextMemberId;
+    this.nextMemberId++;
+    const member = new GymMember(name, memberId);
+    this.members.set(memberId, member);
+    console.log(`Welcome ${name}! Your membership ID is: ${memberId}`);
+    return memberId;
+  }
+
+  /**
+   * Get a member by ID.
+   */
+  getMember(memberId: number): GymMember | undefined {
+    return this.members.get(memberId);
+  }
+
+  /**
+   * Get all members.
+   */
+  getAllMembers(): GymMember[] {
+    return Array.from(this.members.values());
+  }
+
+  /**
+   * Save gym data to a JSON file.
+   */
+  saveToFile(filename: string): void {
+    const membersObj: { [id: number]: MemberData } = {};
+    this.members.forEach((member, id) => {
+      membersObj[id] = member.toData();
+    });
+
+    const data: GymData = {
+      gymName: this.name,
+      nextMemberId: this.nextMemberId,
+      members: membersObj,
+    };
+
+    try {
+      const jsonString = JSON.stringify(data, null, 2);
+      fs.writeFileSync(filename, jsonString, "utf8");
+      console.log(`✓ Gym data saved to ${filename}`);
+    } catch (error) {
+      console.log(`✗ Error saving file: ${error}`);
     }
+  }
 
-    /**
-     * Add a new member.
-     */
-    addMember(name: string): number {
-        const memberId = this.nextMemberId;
-        this.nextMemberId++;
-        const member = new GymMember(name, memberId);
-        this.members.set(memberId, member);
-        console.log(`Welcome ${name}! Your membership ID is: ${memberId}`);
-        return memberId;
+  /**
+   * Load gym data from a JSON file.
+   */
+  loadFromFile(filename: string): void {
+    try {
+      const jsonString = fs.readFileSync(filename, "utf8");
+      const data: GymData = JSON.parse(jsonString);
+
+      this.name = data.gymName;
+      this.nextMemberId = data.nextMemberId;
+      this.members.clear();
+
+      for (const idStr in data.members) {
+        const id = parseInt(idStr);
+        const memberData = data.members[id];
+        this.members.set(id, GymMember.fromData(memberData));
+      }
+
+      console.log(`✓ Loaded gym data from ${filename}`);
+      console.log(`  Gym: ${this.name} with ${this.members.size} members`);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+        console.log(`✗ File ${filename} not found. Starting fresh!`);
+      } else {
+        console.log(`✗ Error loading file: ${error}`);
+      }
     }
-
-    /**
-     * Get a member by ID.
-     */
-    getMember(memberId: number): GymMember | undefined {
-        return this.members.get(memberId);
-    }
-
-    /**
-     * Get all members.
-     */
-    getAllMembers(): GymMember[] {
-        return Array.from(this.members.values());
-    }
-
-    /**
-     * Save gym data to a JSON file.
-     */
-    saveToFile(filename: string): void {
-        const membersObj: { [id: number]: MemberData } = {};
-        this.members.forEach((member, id) => {
-            membersObj[id] = member.toData();
-        });
-
-        const data: GymData = {
-            gymName: this.name,
-            nextMemberId: this.nextMemberId,
-            members: membersObj
-        };
-
-        try {
-            const jsonString = JSON.stringify(data, null, 2);
-            fs.writeFileSync(filename, jsonString, 'utf8');
-            console.log(`✓ Gym data saved to ${filename}`);
-        } catch (error) {
-            console.log(`✗ Error saving file: ${error}`);
-        }
-    }
-
-    /**
-     * Load gym data from a JSON file.
-     */
-    loadFromFile(filename: string): void {
-        try {
-            const jsonString = fs.readFileSync(filename, 'utf8');
-            const data: GymData = JSON.parse(jsonString);
-
-            this.name = data.gymName;
-            this.nextMemberId = data.nextMemberId;
-            this.members.clear();
-
-            for (const idStr in data.members) {
-                const id = parseInt(idStr);
-                const memberData = data.members[id];
-                this.members.set(id, GymMember.fromData(memberData));
-            }
-
-            console.log(`✓ Loaded gym data from ${filename}`);
-            console.log(`  Gym: ${this.name} with ${this.members.size} members`);
-        } catch (error) {
-            if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-                console.log(`✗ File ${filename} not found. Starting fresh!`);
-            } else {
-                console.log(`✗ Error loading file: ${error}`);
-            }
-        }
-    }
+  }
 }
 
 // Demo the system
@@ -249,17 +256,17 @@ const member1 = myGym.getMember(member1Id);
 const member2 = myGym.getMember(member2Id);
 
 if (member1) {
-    member1.logWorkout("Bench Press", 3, 10, 135);
-    member1.logWorkout("Squat", 4, 8, 185);
+  member1.logWorkout("Bench Press", 3, 10, 135);
+  member1.logWorkout("Squat", 4, 8, 185);
 }
 
 if (member2) {
-    member2.logWorkout("Deadlift", 5, 5, 225);
+  member2.logWorkout("Deadlift", 5, 5, 225);
 }
 
 console.log("\n=== Member Summaries ===");
 for (const member of myGym.getAllMembers()) {
-    console.log(member.getSummary());
+  console.log(member.getSummary());
 }
 
 console.log();
@@ -282,9 +289,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 
 // Write your code here:
 
-
-
-
 // TODO 2: Add yourself as a member
 // Use the addMember method to add yourself to the gym
 // Store your member ID in myMemberId (type: number)
@@ -296,10 +300,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 // Need help? Ask: "How do I use a method that returns a value in TypeScript?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 3: Check if member exists before using
 // Since getMember can return undefined, check if myMember exists
@@ -316,12 +316,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 
 // Write your code here:
 
-
-
-
-
-
-
 // TODO 4: Add another member and log their workout
 // Add a friend or workout partner
 // Store their ID and get their member object
@@ -332,12 +326,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 // Need help? Ask: "How do I repeat a process for a second object?"
 
 // Write your code here:
-
-
-
-
-
-
 
 // TODO 5: Print all member summaries
 // Get all members using getAllMembers() and loop through them
@@ -352,10 +340,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 
 // Write your code here:
 
-
-
-
-
 // TODO 6: Save your gym data
 // Call saveToFile with filename "my_gym_data.json"
 // After running, check that the file was created!
@@ -365,9 +349,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 // Need help? Ask: "How do I save data to a file in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // TODO 7: Test loading data (Optional - requires running twice)
 // Comment out TODOs 1-6, then create a NEW empty gym
@@ -379,9 +360,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 // Want to see it work? Ask: "How do I test loading saved data?"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // BONUS CHALLENGES (Optional)
@@ -400,9 +378,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 
 // Write your code here:
 
-
-
-
 // BONUS 2: Add workout statistics interface and methods
 // Create an interface WorkoutStats with:
 // - totalWorkouts: number
@@ -416,9 +391,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 
 // Write your code here:
 
-
-
-
 // BONUS 3: Create a generic save/load utility
 // Create functions with proper typing:
 // - saveJSON<T>(filename: string, data: T): void
@@ -429,9 +401,6 @@ console.log("\n\n=== YOUR GYM SIMULATOR ===\n");
 // This is advanced TypeScript! Ask: "How do generics work in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // TESTING YOUR CODE

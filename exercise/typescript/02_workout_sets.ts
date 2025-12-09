@@ -39,7 +39,13 @@ const repsPerSet: number[] = [5, 5, 5, 5, 5]; // Array of numbers
 const weights: number[] = [135, 185, 225, 275, 315];
 
 // Type inference for arrays
-const setNotes = ["Felt strong", "Good form", "PR attempt!", "Success!", "Max effort"];
+const setNotes = [
+  "Felt strong",
+  "Good form",
+  "PR attempt!",
+  "Success!",
+  "Max effort",
+];
 // Hover over setNotes - TypeScript inferred: string[]
 
 console.log("=== Workout Session ===");
@@ -49,14 +55,18 @@ console.log();
 
 // Accessing array elements (same as Python, 0-indexed)
 console.log(`First set: ${repsPerSet[0]} reps at ${weights[0]} lbs`);
-console.log(`Last set: ${repsPerSet[repsPerSet.length - 1]} reps at ${weights[weights.length - 1]} lbs`);
+console.log(
+  `Last set: ${repsPerSet[repsPerSet.length - 1]} reps at ${
+    weights[weights.length - 1]
+  } lbs`
+);
 console.log();
 
 // For loop with proper typing
 console.log("Set-by-set breakdown:");
 for (let i = 0; i < repsPerSet.length; i++) {
-    const setNumber: number = i + 1;
-    console.log(`  Set ${setNumber}: ${repsPerSet[i]} reps × ${weights[i]} lbs`);
+  const setNumber: number = i + 1;
+  console.log(`  Set ${setNumber}: ${repsPerSet[i]} reps × ${weights[i]} lbs`);
 }
 console.log();
 
@@ -66,15 +76,15 @@ console.log(`Total reps: ${totalReps}`);
 
 // Calculate volume with reduce
 const totalVolume: number = repsPerSet.reduce((sum, reps, index) => {
-    return sum + (reps * weights[index]);
+  return sum + reps * weights[index];
 }, 0);
 console.log(`Total volume: ${totalVolume} lbs`);
 
 // For...of loop (when you don't need the index)
 console.log("\nWeight progression:");
 for (const weight of weights) {
-    // TypeScript knows weight is a number!
-    console.log(`  → ${weight} lbs`);
+  // TypeScript knows weight is a number!
+  console.log(`  → ${weight} lbs`);
 }
 
 // Demonstrate type safety
@@ -100,10 +110,6 @@ console.log("\n=== YOUR WORKOUT ===");
 
 // Write your code here:
 
-
-
-
-
 // TODO 2: Create arrays using type inference
 // Create the same arrays but let TypeScript INFER the types:
 // - Use different names like: squatRepsInferred, squatWeightsInferred
@@ -117,10 +123,6 @@ console.log("\n=== YOUR WORKOUT ===");
 
 // Write your code here:
 
-
-
-
-
 // TODO 3: Print each set with a for loop
 // Use a for loop with index to print each set:
 // Format: "Set 1: 8 reps × 135 lbs"
@@ -131,10 +133,6 @@ console.log("\n=== YOUR WORKOUT ===");
 // Stuck? Ask: "How do I loop through an array with an index in TypeScript?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 4: Calculate total reps using reduce
 // Use the reduce method to sum all reps
@@ -148,9 +146,6 @@ console.log("\n=== YOUR WORKOUT ===");
 
 // Write your code here:
 
-
-
-
 // TODO 5: Calculate total volume
 // Use reduce to calculate volume (sum of reps × weight for each set)
 // HINT: You need to access both arrays using the index parameter
@@ -161,9 +156,6 @@ console.log("\n=== YOUR WORKOUT ===");
 // Stuck? Ask: "How do I use reduce with two arrays in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // TODO 6: Find the maximum weight using Math.max
 // Use Math.max() with the spread operator (...) to find max weight
@@ -176,9 +168,6 @@ console.log("\n=== YOUR WORKOUT ===");
 // Need help? Ask: "How do I find the maximum value in an array in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // BONUS CHALLENGES (Optional)
@@ -196,9 +185,6 @@ console.log("\n=== YOUR WORKOUT ===");
 
 // Write your code here:
 
-
-
-
 // BONUS 2: Calculate average weight with proper typing
 // Calculate the average weight: sum of all weights / number of sets
 // Use reduce to sum, then divide by length
@@ -209,9 +195,6 @@ console.log("\n=== YOUR WORKOUT ===");
 // Need help? Ask: "How do I calculate the average of an array in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // BONUS 3: Create an intensity array using map
 // Use the .map() method to create a new array where each element is reps × weight
@@ -226,9 +209,6 @@ console.log("\n=== YOUR WORKOUT ===");
 
 // Write your code here:
 
-
-
-
 // BONUS 4: Filter heavy sets
 // Use .filter() to create an array of only the sets where weight >= 200 lbs
 // HINT: squatWeights.filter(weight => weight >= 200)
@@ -238,9 +218,6 @@ console.log("\n=== YOUR WORKOUT ===");
 // Need help? Ask: "How do I filter an array in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // TESTING YOUR CODE

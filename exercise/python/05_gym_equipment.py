@@ -40,6 +40,7 @@ Run this exercise: uv run exercise/python/05_gym_equipment.py
 # EXAMPLE CODE
 # ============================================================================
 
+
 class GymEquipment:
     """
     A class representing a piece of gym equipment.
@@ -143,7 +144,6 @@ print("\n\n=== YOUR GYM EQUIPMENT MANAGER ===")
 # Write your code here:
 
 
-
 # TODO 2: Simulate checking out and using equipment
 # Simulate someone using the bench:
 # 1. Check out the bench
@@ -156,9 +156,6 @@ print("\n\n=== YOUR GYM EQUIPMENT MANAGER ===")
 # Write your code here:
 
 
-
-
-
 # TODO 3: Track multiple uses
 # Simulate the squat_rack being used 3 times in a row:
 # - Check it out, check it in, check it out, check it in, check it out, check it in
@@ -169,9 +166,6 @@ print("\n\n=== YOUR GYM EQUIPMENT MANAGER ===")
 # Stuck? Ask: "How do I access an object's attributes?"
 
 # Write your code here:
-
-
-
 
 
 # TODO 4: Create a new class for a Treadmill
@@ -208,10 +202,6 @@ print("\n\n=== YOUR GYM EQUIPMENT MANAGER ===")
 # Write your code here:
 
 
-
-
-
-
 # ============================================================================
 # BONUS CHALLENGES (Optional)
 # ============================================================================
@@ -229,8 +219,6 @@ print("\n\n=== YOUR GYM EQUIPMENT MANAGER ===")
 # Write your code here:
 
 
-
-
 # BONUS 2: Create a BenchPress class that inherits from GymEquipment
 # Use class inheritance to create a BenchPress class that:
 # - Inherits from GymEquipment
@@ -243,8 +231,6 @@ print("\n\n=== YOUR GYM EQUIPMENT MANAGER ===")
 # Write your code here:
 
 
-
-
 # BONUS 3: Create a gym inventory system
 # Create a list called gym_inventory and add all your equipment objects to it.
 # Then loop through and print the status of all equipment.
@@ -253,8 +239,6 @@ print("\n\n=== YOUR GYM EQUIPMENT MANAGER ===")
 # Want guidance? Ask: "How do I store objects in a list and loop through them?"
 
 # Write your code here:
-
-
 
 
 # ============================================================================

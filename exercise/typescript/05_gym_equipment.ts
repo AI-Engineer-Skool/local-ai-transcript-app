@@ -45,90 +45,90 @@
  * Represents a piece of gym equipment.
  */
 class GymEquipment {
-    // Property declarations with types
-    name: string;
-    weight: number;
-    inUse: boolean;
-    usesToday: number;
+  // Property declarations with types
+  name: string;
+  weight: number;
+  inUse: boolean;
+  usesToday: number;
 
-    /**
-     * Constructor with typed parameters.
-     */
-    constructor(name: string, weight: number) {
-        this.name = name;
-        this.weight = weight;
-        this.inUse = false;
-        this.usesToday = 0;
-    }
+  /**
+   * Constructor with typed parameters.
+   */
+  constructor(name: string, weight: number) {
+    this.name = name;
+    this.weight = weight;
+    this.inUse = false;
+    this.usesToday = 0;
+  }
 
-    /**
-     * Mark equipment as in use.
-     * Method with no return value (void).
-     */
-    checkOut(): void {
-        if (this.inUse) {
-            console.log(`${this.name} is already in use!`);
-        } else {
-            this.inUse = true;
-            this.usesToday++;
-            console.log(`${this.name} checked out. Uses today: ${this.usesToday}`);
-        }
+  /**
+   * Mark equipment as in use.
+   * Method with no return value (void).
+   */
+  checkOut(): void {
+    if (this.inUse) {
+      console.log(`${this.name} is already in use!`);
+    } else {
+      this.inUse = true;
+      this.usesToday++;
+      console.log(`${this.name} checked out. Uses today: ${this.usesToday}`);
     }
+  }
 
-    /**
-     * Mark equipment as available.
-     */
-    checkIn(): void {
-        if (!this.inUse) {
-            console.log(`${this.name} is already checked in!`);
-        } else {
-            this.inUse = false;
-            console.log(`${this.name} checked back in. Ready for next person!`);
-        }
+  /**
+   * Mark equipment as available.
+   */
+  checkIn(): void {
+    if (!this.inUse) {
+      console.log(`${this.name} is already checked in!`);
+    } else {
+      this.inUse = false;
+      console.log(`${this.name} checked back in. Ready for next person!`);
     }
+  }
 
-    /**
-     * Get status message.
-     * Method with string return type.
-     */
-    getStatus(): string {
-        const status = this.inUse ? "IN USE" : "AVAILABLE";
-        return `${this.name} (${this.weight} lbs) - ${status} - Used ${this.usesToday} times today`;
-    }
+  /**
+   * Get status message.
+   * Method with string return type.
+   */
+  getStatus(): string {
+    const status = this.inUse ? "IN USE" : "AVAILABLE";
+    return `${this.name} (${this.weight} lbs) - ${status} - Used ${this.usesToday} times today`;
+  }
 }
 
 // TypeScript's access modifiers (more advanced)
 class SecureEquipment {
-    // public: accessible everywhere (default)
-    public name: string;
+  // public: accessible everywhere (default)
+  public name: string;
 
-    // private: only accessible inside the class
-    private maintenanceCount: number;
+  // private: only accessible inside the class
+  private maintenanceCount: number;
 
-    // readonly: can only be set in constructor
-    readonly serialNumber: string;
+  // readonly: can only be set in constructor
+  readonly serialNumber: string;
 
-    constructor(name: string, serialNumber: string) {
-        this.name = name;
-        this.serialNumber = serialNumber;
-        this.maintenanceCount = 0;
-    }
+  constructor(name: string, serialNumber: string) {
+    this.name = name;
+    this.serialNumber = serialNumber;
+    this.maintenanceCount = 0;
+  }
 
-    // Public method
-    public performMaintenance(): void {
-        this.maintenanceCount++;
-        console.log(`Maintenance performed. Total: ${this.maintenanceCount}`);
-    }
+  // Public method
+  public performMaintenance(): void {
+    this.maintenanceCount++;
+    console.log(`Maintenance performed. Total: ${this.maintenanceCount}`);
+  }
 
-    // Private method (only accessible inside class)
-    private resetMaintenance(): void {
-        this.maintenanceCount = 0;
-    }
+  // Private method (only accessible inside class)
+  private resetMaintenance(): void {
+    this.maintenanceCount = 0;
+  }
 
-    // Getter (like a property but calculated)
-    get needsMaintenance(): boolean {
-        return this.maintenanceCount < 5;
-    }
+  // Getter (like a property but calculated)
+  get needsMaintenance(): boolean {
+    return this.maintenanceCount < 5;
+  }
 }
 
 // Create instances
@@ -177,11 +177,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 
 // Write your code here:
 
-
-
-
-
-
 // TODO 2: Use the getStatus method
 // Call getStatus() on each of your three equipment objects and print the results
 //
@@ -190,10 +185,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 // Need help? Ask: "How do I call methods on a class instance?"
 
 // Write your code here:
-
-
-
-
 
 // TODO 3: Simulate using equipment
 // For the bench:
@@ -208,11 +199,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 
 // Write your code here:
 
-
-
-
-
-
 // TODO 4: Track multiple uses
 // Check the squatRack out and in 3 times (simulate 3 people using it)
 // Then print how many times it's been used today
@@ -224,11 +210,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 // Need help? Ask: "How do I access a class property in TypeScript?"
 
 // Write your code here:
-
-
-
-
-
 
 // TODO 5: Create a Treadmill class
 // Create a class called Treadmill with:
@@ -254,24 +235,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 
 // Write your code here:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // TODO 6: Create and test a Treadmill instance
 // Create a Treadmill object:
 // - Name: "Treadmill #1"
@@ -290,13 +253,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 
 // Write your code here:
 
-
-
-
-
-
-
-
 // ============================================================================
 // BONUS CHALLENGES (Optional)
 // ============================================================================
@@ -313,9 +269,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 // For help: Ask "How do access modifiers work in TypeScript classes?"
 
 // Write your code here:
-
-
-
 
 // BONUS 2: Create a class that implements an interface
 // First, create an interface:
@@ -335,9 +288,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 
 // Write your code here:
 
-
-
-
 // BONUS 3: Create a static method
 // Add a static method to your Treadmill class:
 // static convertMilesToKm(miles: number): number {
@@ -350,9 +300,6 @@ console.log("\n\n=== YOUR GYM EQUIPMENT MANAGER ===");
 // Need help? Ask: "What are static methods in TypeScript?"
 
 // Write your code here:
-
-
-
 
 // ============================================================================
 // TESTING YOUR CODE

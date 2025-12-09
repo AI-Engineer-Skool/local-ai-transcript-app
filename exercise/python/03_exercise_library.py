@@ -44,7 +44,7 @@ bench_press = {
     "name": "Bench Press",
     "muscle_group": "Chest",
     "equipment": "Barbell",
-    "difficulty": "Intermediate"
+    "difficulty": "Intermediate",
 }
 
 print("=== Single Exercise ===")
@@ -66,20 +66,20 @@ exercise_library = {
         "name": "Bench Press",
         "muscle_group": "Chest",
         "equipment": "Barbell",
-        "difficulty": "Intermediate"
+        "difficulty": "Intermediate",
     },
     "squat": {
         "name": "Squat",
         "muscle_group": "Legs",
         "equipment": "Rack",
-        "difficulty": "Intermediate"
+        "difficulty": "Intermediate",
     },
     "pull_up": {
         "name": "Pull Up",
         "muscle_group": "Back",
         "equipment": "Pull-up Bar",
-        "difficulty": "Advanced"
-    }
+        "difficulty": "Advanced",
+    },
 }
 
 print("=== Exercise Library ===")
@@ -96,7 +96,9 @@ print()
 # Loop through all exercises
 print("All exercises in library:")
 for exercise_key, exercise_data in exercise_library.items():
-    print(f"  → {exercise_data['name']} - {exercise_data['muscle_group']} ({exercise_data['difficulty']})")
+    print(
+        f"  → {exercise_data['name']} - {exercise_data['muscle_group']} ({exercise_data['difficulty']})"
+    )
 
 print()
 
@@ -139,8 +141,6 @@ for exercise_data in exercise_library.values():
 # Write your code here:
 
 
-
-
 # TODO 3: Create a dictionary for a shoulder press
 # Create a dictionary called shoulder_press with:
 # - "name": "Overhead Press"
@@ -156,8 +156,6 @@ for exercise_data in exercise_library.values():
 # Write your code here:
 
 
-
-
 # TODO 4: Print all exercise names
 # Use a for loop to iterate through exercise_library and print just the name
 # of each exercise in the library.
@@ -168,9 +166,6 @@ for exercise_data in exercise_library.values():
 # Need help? Ask: "How do I loop through dictionary values in Python?"
 
 # Write your code here:
-
-
-
 
 
 # TODO 5: Find all chest exercises
@@ -201,8 +196,6 @@ for exercise_data in exercise_library.values():
 # Write your code here:
 
 
-
-
 # BONUS 2: Add a new property to all exercises
 # Add a new key "favorite" to each exercise in the library, set to False initially.
 # Then set your favorite exercise's "favorite" key to True.
@@ -213,8 +206,6 @@ for exercise_data in exercise_library.values():
 # Write your code here:
 
 
-
-
 # BONUS 3: Create an equipment list
 # Create a list of all unique equipment types used in your exercise library.
 # (Hint: Use a set to automatically remove duplicates, then convert to a list)
@@ -223,8 +214,6 @@ for exercise_data in exercise_library.values():
 # Need help? Ask: "How do I get unique values from dictionary data?"
 
 # Write your code here:
-
-
 
 
 # ============================================================================

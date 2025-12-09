@@ -128,8 +128,6 @@ print("\n=== YOUR WORKOUT LOG ===")
 # Write your code here:
 
 
-
-
 # BONUS 2: Create a complete workout report
 # Use multiple print statements or f-strings to create a nice-looking report
 # that includes all the information: exercise name, muscle group, sets, reps,
