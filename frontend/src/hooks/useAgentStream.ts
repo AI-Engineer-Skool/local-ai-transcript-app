@@ -21,6 +21,7 @@ const initialState: StreamingState = {
   textContent: '',
   agentState: null,
   currentTool: null,
+  currentToolArgs: '',
   completedTools: [],
   error: null,
 };
@@ -78,13 +79,22 @@ export function useAgentStream() {
             setState((prev) => ({
               ...prev,
               currentTool: event.toolCallName || null,
+              currentToolArgs: '', // Reset args for new tool call
             }));
           },
           onToolCallArgsEvent: ({ event }) => {
             console.log('[AG-UI] Tool call args:', event.delta);
+            setState((prev) => ({
+              ...prev,
+              currentToolArgs: prev.currentToolArgs + (event.delta || ''),
+            }));
           },
           onToolCallEndEvent: ({ toolCallName }) => {
             console.log(`[AG-UI] Tool call ended: ${toolCallName}`);
+            setState((prev) => ({
+              ...prev,
+              currentToolArgs: '', // Clear args when tool finishes
+            }));
           },
           onToolCallResultEvent: ({ event }) => {
             console.log('[AG-UI] Tool call result:', event.content);

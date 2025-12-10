@@ -48,6 +48,7 @@ function App() {
     textContent: streamingText,
     agentState,
     currentTool,
+    currentToolArgs,
     completedTools,
     error: streamingError,
     runAgent,
@@ -406,6 +407,7 @@ function App() {
           streamingText={streamingText}
           agentState={agentState}
           currentTool={currentTool}
+          currentToolArgs={currentToolArgs}
           completedTools={completedTools}
           error={streamingError || undefined}
         />

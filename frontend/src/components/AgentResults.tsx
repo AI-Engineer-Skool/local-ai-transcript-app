@@ -55,6 +55,7 @@ export function AgentResults({
   streamingText = '',
   agentState = null,
   currentTool = null,
+  currentToolArgs = '',
   completedTools = [],
 }: StreamingAgentResultsProps) {
   // Streaming mode - show real-time updates
@@ -75,6 +76,7 @@ export function AgentResults({
           {/* Tool execution progress */}
           <ToolCallProgress
             currentTool={currentTool || agentState?.current_tool || null}
+            currentToolArgs={currentToolArgs}
             completedTools={effectiveCompletedTools}
           />
 

@@ -2,11 +2,12 @@
  * StreamingText component - displays text with animated cursor during streaming.
  *
  * Features:
- * - Shows text content as it streams in
+ * - Shows text content as it streams in with markdown rendering
  * - Displays blinking cursor when actively streaming
  * - Smoothly handles empty content state
  */
 
+import ReactMarkdown from 'react-markdown';
 import type { StreamingTextProps } from '../types';
 import styles from './StreamingText.module.css';
 
@@ -18,9 +19,9 @@ export function StreamingText({ content, isStreaming }: StreamingTextProps) {
 
   return (
     <div className={styles.container}>
-      <span className={styles.text}>
-        {content || (isStreaming ? '' : '')}
-      </span>
+      <div className={styles.text}>
+        <ReactMarkdown>{content || ''}</ReactMarkdown>
+      </div>
       {isStreaming && <span className={styles.cursor}>|</span>}
     </div>
   );

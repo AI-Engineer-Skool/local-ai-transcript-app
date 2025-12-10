@@ -277,6 +277,7 @@ export interface StreamingState {
   textContent: string;
   agentState: AgentState | null;
   currentTool: string | null;
+  currentToolArgs: string;
   completedTools: string[];
   error: string | null;
 }
@@ -294,6 +295,7 @@ export interface StreamingTextProps {
  */
 export interface ToolCallProgressProps {
   currentTool: string | null;
+  currentToolArgs: string;
   completedTools: string[];
 }
 
@@ -306,5 +308,6 @@ export interface StreamingAgentResultsProps extends AgentResultsProps {
   streamingText?: string;
   agentState?: AgentState | null;
   currentTool?: string | null;
+  currentToolArgs?: string;
   completedTools?: string[];
 }

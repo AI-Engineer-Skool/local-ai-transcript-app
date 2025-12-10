@@ -36,6 +36,7 @@ function getToolLabel(toolType: string): string {
 
 export function ToolCallProgress({
   currentTool,
+  currentToolArgs,
   completedTools,
 }: ToolCallProgressProps) {
   // Don't render if nothing to show
@@ -56,8 +57,16 @@ export function ToolCallProgress({
       {/* Currently executing tool */}
       {currentTool && (
         <div className={styles.running}>
-          <Loader2 size={16} className={styles.spinner} />
-          <span>Running {formatToolName(currentTool)}...</span>
+          <div className={styles.runningHeader}>
+            <Loader2 size={16} className={styles.spinner} />
+            <span>Running {formatToolName(currentTool)}...</span>
+          </div>
+          {/* Streaming tool arguments */}
+          {currentToolArgs && (
+            <div className={styles.argsContainer}>
+              <pre className={styles.streamingArgs}>{currentToolArgs}</pre>
+            </div>
+          )}
         </div>
       )}
     </div>
