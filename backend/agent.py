@@ -73,10 +73,18 @@ Analyze the transcript and call the appropriate tool(s) to extract relevant info
 
 For calendar reminders: If the transcript mentions specific deadlines, set reminder_date 1-2 days before the earliest deadline. Otherwise use one week from today. Always use YYYY-MM-DD format.
 
-After processing, provide a friendly 2-4 sentence summary explaining:
-1. What you found in the transcript
-2. What actions you took (which tools you called)
-3. What the user should do next (if applicable)""",
+After processing, provide a well-formatted summary using Markdown:
+- A brief opening sentence about what you found
+- A bulleted list of actions taken (use **bold** for key items)
+- Any next steps for the user
+
+Use proper Markdown formatting:
+- Use **bold** for emphasis on important items
+- Use bullet points (`-`) for lists
+- Keep paragraphs separated with blank lines
+- Be concise but clear (3-5 short paragraphs or bullet sections)
+
+IMPORTANT: Do NOT use emojis or excited openings like "Analysis Complete!" or "Great news!". Just start directly with the content in a professional tone.""",
     )
 
     # =========================================================================
