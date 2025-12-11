@@ -44,6 +44,26 @@
   line-height: 1.6;
 }
 
+/* Markdown content styles within summary */
+.summary p {
+  margin: 0 0 var(--space-3) 0;
+}
+
+.summary p:last-child {
+  margin-bottom: 0;
+}
+
+.summary ul,
+.summary ol {
+  margin: var(--space-2) 0 var(--space-3) 0;
+  padding-left: var(--space-5);
+}
+
+.summary ul:last-child,
+.summary ol:last-child {
+  margin-bottom: 0;
+}
+
 .calendarSection {
   display: flex;
   flex-direction: column;

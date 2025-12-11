@@ -1,4 +1,5 @@
 import { Brain } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { Box } from './Box';
 import { IncidentReport } from './IncidentReport';
 import { DecisionRecord } from './DecisionRecord';
@@ -67,7 +68,7 @@ export function AgentResults({ toolCalls, results, summary, error, isProcessing 
         {/* Summary from agent */}
         {summary && (
           <div className={styles.summary}>
-            {summary}
+            <ReactMarkdown>{summary}</ReactMarkdown>
           </div>
         )}
 
