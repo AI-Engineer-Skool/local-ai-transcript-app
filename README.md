@@ -3,9 +3,35 @@
 A base for your portfolio piece to land your next AI engineering job.
 AI-powered voice transcription with Whisper and LLM cleaning. Browser-based recording interface with FastAPI backend.
 
+> **📍 You are on branch `checkpoint-agentic-openrouter`**
+>
+> This branch demonstrates **agentic AI workflows** with autonomous tool selection and execution. The agent analyzes transcripts and decides which tools to invoke (calendar events, decision records, incident reports). It builds on `main` and requires a powerful cloud model via OpenRouter for reliable tool calling.
+>
+> **Prerequisite:** Understand the base transcript app on `main` first.
+>
+> **📚 This checkpoint is covered in detail in the [Classroom](https://aiengineer.community/join).**
+
 **📺 Recommended Video Tutorial:** For project structure and API details, watch the full tutorial on YouTube: https://youtu.be/WUo5tKg2lnE
 
-**Agentic Branch:** Switch to the branch `checkpoint-agentic-openrouter` to build on the agentic demo from the full video on YouTube: https://youtu.be/uR_lvAZFBw0
+---
+
+## Branches
+
+This repository uses checkpoint branches to progressively teach AI engineering concepts:
+
+| Branch | Description | Builds On | Learning Resource |
+|--------|-------------|-----------|-------------------|
+| `main` | Complete transcript app with Whisper + LLM cleaning (runs fully locally, beginner friendly) | — | [YouTube Tutorial](https://youtu.be/WUo5tKg2lnE) |
+| `checkpoint-1-fundamentals` | Exercise generation system for learning Python/TypeScript fundamentals | — | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-agentic-openrouter` | Agentic workflow with autonomous tool selection | `main` | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-pydanticai-openrouter` | PydanticAI framework for structured agent development | `checkpoint-agentic-openrouter` | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-rest-mcp-openrouter` | MCP integration with REST API and GitHub Issues | `checkpoint-pydanticai-openrouter` | [Classroom](https://aiengineer.community/join) |
+
+> **Why "openrouter" in branch names?** These branches use [OpenRouter](https://openrouter.ai/) to access powerful cloud models that reliably support tool/function calling. Small local models struggle with agentic workflows.
+
+Switch branches with: `git checkout <branch-name>`
+
+---
 
 **Features:**
 
@@ -16,8 +42,7 @@ AI-powered voice transcription with Whisper and LLM cleaning. Browser-based reco
 - 📋 One-click copy to clipboard
 - 🛠️ **Agentic Workflow** (autonomous tool selection and execution)
 
-> **⚠️ Important Note for `checkpoint-agentic-openrouter` Branch:**
-> This branch includes advanced **agentic AI features** with autonomous tool calling (calendar generation, decision records, incident reports).
+> **⚠️ Important:** This branch includes advanced **agentic AI features** with autonomous tool calling (calendar generation, decision records, incident reports).
 > **Small local models struggle with reliable tool/function calling.** For best results, use a **strong cloud-based model** via [OpenRouter](https://openrouter.ai/) or another OpenAI-API compatible vendor. (see .env.example)
 
 Note that the vanilla version uses a smaller language model running on your CPU.
@@ -34,7 +59,7 @@ For example:
 
 **📚 Need help and want to learn more?**
 
-Full courses on AI Engineering are available at [https://www.skool.com/ai-engineer](https://www.skool.com/ai-engineer)
+Full courses on AI Engineering are available at [https://aiengineer.community/join](https://aiengineer.community/join)
 
 ---
 
