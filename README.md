@@ -1,168 +1,94 @@
-# AI Transcript App
+# AI Engineer Fundamentals - Exercise Generator
 
-A base for your portfolio piece to land your next AI engineering job.
-AI-powered voice transcription with Whisper and LLM cleaning. Browser-based recording interface with FastAPI backend.
-
-**📺 Recommended Video Tutorial:** For project structure and API details, watch the full tutorial on YouTube: https://youtu.be/WUo5tKg2lnE
-
-**Features:**
-
-- 🎤 Browser-based voice recording
-- 🔊 English Whisper speech-to-text (runs locally)
-- 🤖 LLM cleaning (removes filler words, fixes errors)
-- 🔌 **OpenAI API-compatible** (works with Ollama, LM Studio, OpenAI, or any OpenAI-compatible API)
-- 📋 One-click copy to clipboard
-
-Note that the vanilla version uses a smaller language model running on your CPU.
-This means the AI may not listen to system prompts that well depending on the transcript.
-The challenge for you is to change this portfolio app to advance the solution and make it your own.
-
-For example:
-- Modify it for a specific industry
-- Add GPU acceleration + stronger local LLM
-- Use a cloud AI model
-- Real-time transcription/LLM streaming
-- Multi-language support beyond English
-
-**📚 Need help and want to learn more?**
-
-Full courses on AI Engineering are available at [https://www.skool.com/ai-engineer](https://www.skool.com/ai-engineer)
+> **📍 You are on branch `checkpoint-1-fundamentals`**
+>
+> This branch contains an **AI-powered exercise generation system** for learning Python and TypeScript fundamentals. Run the student quiz to create your profile, then use the exercise generator prompt with an AI agent to generate personalized coding exercises based on your interests.
+>
+> **📚 This checkpoint is covered in detail in the [Classroom](https://aiengineer.community/join).**
 
 ---
 
+## Branches
+
+This repository uses checkpoint branches to progressively teach AI engineering concepts:
+
+| Branch | Description | Builds On | Learning Resource |
+|--------|-------------|-----------|-------------------|
+| `main` | Complete transcript app with Whisper + LLM cleaning (runs fully locally, beginner friendly) | — | [YouTube Tutorial](https://youtu.be/WUo5tKg2lnE) |
+| `checkpoint-1-fundamentals` | Exercise generation system for learning Python/TypeScript fundamentals | — | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-agentic-openrouter` | Agentic workflow with autonomous tool selection | `main` | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-pydanticai-openrouter` | PydanticAI framework for structured agent development | `checkpoint-agentic-openrouter` | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-rest-mcp-openrouter` | MCP integration with REST API and GitHub Issues | `checkpoint-pydanticai-openrouter` | [Classroom](https://aiengineer.community/join) |
+
+> **Why "openrouter" in branch names?** These branches use [OpenRouter](https://openrouter.ai/) to access powerful cloud models that reliably support tool/function calling. Small local models struggle with agentic workflows.
+
+Switch branches with: `git checkout <branch-name>`
+
+---
+
+## What's in This Branch?
+
+This branch provides an AI-assisted learning system for programming fundamentals:
+
+- **`exercise/student_quiz.py`** - Interactive quiz to create your learning profile
+- **`exercise/EXERCISE_GENERATOR.md`** - Prompt for AI agents to generate personalized exercises
+- **`exercise/python/`** - Directory for generated Python exercises
+- **`exercise/typescript/`** - Directory for generated TypeScript exercises
+
 ## Quick Start
 
-### 🚀 Dev Container (Recommended)
-
-**This project is devcontainer-first. The easiest way to get started:**
-
-#### 1. Prerequisites
+### 1. Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [VS Code](https://code.visualstudio.com/)
 - [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-#### 2. Open in Dev Container
+### 2. Open in Dev Container
 
 - Click **"Reopen in Container"** in VS Code
 - Or: `Cmd/Ctrl+Shift+P` → **"Dev Containers: Reopen in Container"**
-- Wait ~5-10 minutes for initial build and model download
 
-VS Code automatically:
+### 3. Create Your Student Profile
 
-1. Builds and starts both containers (app + Ollama)
-2. Installs Python and Node.js dependencies
-3. Downloads the Ollama model
-4. Creates `backend/.env` with working defaults
-
-Skip to [Running the App](#running-the-app).
-
----
-
-### 🛠️ Manual Installation
-
-The devcontainer is the easiest supported setup method for beginners.
-If you choose to install manually, you'll need:
-
-- Python 3.12+, Node.js 24+, [uv](https://docs.astral.sh/uv/), and an LLM server ([Ollama](https://ollama.com/) or [LM Studio](https://lmstudio.ai/))
-- Copy `backend/.env.example` to `backend/.env` and configure
-- Install dependencies with `uv sync` (backend) and `npm install` (frontend)
-- Start your LLM server and pull models: `ollama pull llama3.1:8b`
-
-**For detailed setup, use the devcontainer above.**
-
----
-
-## Running the App
-
-Open **two terminals** and run:
-
-**Terminal 1 - Backend:**
+Run the student quiz to generate your personalized learning profile:
 
 ```bash
-cd backend
-uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000 --timeout-keep-alive 600
+uv run exercise/student_quiz.py
 ```
 
-> **Note:** `--timeout-keep-alive 600` sets a 10-minute timeout for long audio processing
+This creates `exercise/STUDENT_PROFILE.md` with your:
+- Programming background
+- Skill level
+- Interest theme (fitness, music, gaming, etc.)
+- Learning style preferences
 
-**Terminal 2 - Frontend:**
+### 4. Generate Personalized Exercises
+
+Open `exercise/EXERCISE_GENERATOR.md` with an AI agent (like Claude Code) and ask it to generate exercises based on your profile. The AI will create themed exercises in both Python and TypeScript.
+
+### 5. Complete the Exercises
+
+Work through the generated exercises:
 
 ```bash
-cd frontend
-npm run dev
+# Run Python exercises
+uv run exercise/python/01_*.py
+
+# Run TypeScript exercises
+npx tsx exercise/typescript/01_*.ts
 ```
 
-**Browser:** Open `http://localhost:3000`
+---
+
+## How It Works
+
+1. **Student Quiz** → Captures your interests, skill level, and learning preferences
+2. **AI Generator** → Reads your profile and creates themed exercises
+3. **Personalized Learning** → Exercises use examples from YOUR interests (gym, music, gaming, etc.)
+4. **Dual Language** → Learn both Python and TypeScript with the same concepts
 
 ---
 
-## Configuration
+**📚 Need help and want to learn more?**
 
-### OpenAI API Compatibility
-
-**This app is compatible with any OpenAI API-format LLM provider:**
-
-- **Ollama** (default - works out of the box in devcontainer)
-- **LM Studio** (local alternative)
-- **OpenAI API** (cloud-based)
-- Any other OpenAI-compatible API
-
-The devcontainer automatically creates `backend/.env` with working Ollama defaults. **No configuration needed to get started.**
-
-To use a different provider, edit `backend/.env`:
-
-- `LLM_BASE_URL` - API endpoint
-- `LLM_API_KEY` - API key
-- `LLM_MODEL` - Model name
-
----
-
-## Troubleshooting
-
-**Container won't start or is very slow:**
-
-⚠️ **This app runs an LLM on CPU and requires adequate Docker resources.**
-
-Configure Docker Desktop resources:
-
-1. Open **Docker Desktop** → **Settings** → **Resources**
-2. Set **CPUs** to maximum available (8+ cores recommended)
-3. Set **Memory** to at least 16GB
-4. Click **Apply & Restart**
-
-**Expected specs:** Modern laptop/desktop with 8+ CPU cores and 16GB RAM. More CPU = faster LLM responses.
-
-**Microphone not working:**
-
-- Use Chrome or Firefox (Safari may have issues)
-- Check browser permissions: Settings → Privacy → Microphone
-
-**Backend fails to start:**
-
-- Check Whisper model downloads: `~/.cache/huggingface/`
-- Ensure enough disk space (models are ~150MB)
-
-**LLM errors:**
-
-- Make sure Ollama service is running (it auto-starts with devcontainer)
-- Check model is downloaded: Model downloads automatically during devcontainer setup
-- Transcription still works without LLM (raw Whisper only)
-
-**LLM is slow:**
-
-- See "Container won't start or is very slow" section above for Docker resource configuration
-- **Fallback option:** Switch to another model (edit `LLM_MODEL` in `backend/.env`)
-  - ⚠️ **Trade-off:** 3b is faster but **significantly worse at cleaning transcripts**
-- **Best alternative:** Use a cloud API like OpenAI for instant responses with excellent quality (edit `.env`)
-
-**Cannot access localhost:3000 or localhost:8000 from host machine:**
-
-- **Docker Desktop:** Go to **Settings** → **Resources** → **Network**
-- Enable **"Use host networking"** (may require Docker Desktop restart)
-- Restart the frontend and backend servers
-
-**Port already in use:**
-
-- Backend: Change port with `--port 8001`
-- Frontend: Edit `vite.config.js`, change `port: 3000`
+Full courses on AI Engineering are available at [https://aiengineer.community/join](https://aiengineer.community/join)
