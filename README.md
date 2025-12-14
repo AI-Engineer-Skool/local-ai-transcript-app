@@ -3,9 +3,35 @@
 A base for your portfolio piece to land your next AI engineering job.
 AI-powered voice transcription with Whisper and LLM cleaning. Browser-based recording interface with FastAPI backend.
 
+> **📍 You are on branch `checkpoint-rest-mcp-openrouter`**
+>
+> This branch demonstrates **MCP (Model Context Protocol) integration** using a REST API approach with GitHub Issues as external tools. It builds on `checkpoint-pydanticai-openrouter` and shows how to expose agent capabilities via MCP servers.
+>
+> **Prerequisite:** Complete the `checkpoint-pydanticai-openrouter` branch first to understand the PydanticAI agent architecture this branch extends.
+>
+> **📚 This checkpoint is covered in detail in the [Classroom](https://aiengineer.community/join).**
+
 **📺 Recommended Video Tutorial:** For project structure and API details, watch the full tutorial on YouTube: https://youtu.be/WUo5tKg2lnE
 
-**Agentic Branch:** Switch to the branch `checkpoint-agentic-openrouter` to build on the agentic demo from the full video on YouTube: https://youtu.be/uR_lvAZFBw0
+---
+
+## Branches
+
+This repository uses checkpoint branches to progressively teach AI engineering concepts:
+
+| Branch | Description | Builds On | Learning Resource |
+|--------|-------------|-----------|-------------------|
+| `main` | Complete transcript app with Whisper + LLM cleaning (runs fully locally, beginner friendly) | — | [YouTube Tutorial](https://youtu.be/WUo5tKg2lnE) |
+| `checkpoint-1-fundamentals` | Exercise generation system for learning Python/TypeScript fundamentals | — | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-agentic-openrouter` | Agentic workflow with autonomous tool selection | `main` | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-pydanticai-openrouter` | PydanticAI framework for structured agent development | `checkpoint-agentic-openrouter` | [Classroom](https://aiengineer.community/join) |
+| `checkpoint-rest-mcp-openrouter` | MCP integration with REST API and GitHub Issues | `checkpoint-pydanticai-openrouter` | [Classroom](https://aiengineer.community/join) |
+
+> **Why "openrouter" in branch names?** These branches use [OpenRouter](https://openrouter.ai/) to access powerful cloud models that reliably support tool/function calling. Small local models struggle with agentic workflows.
+
+Switch branches with: `git checkout <branch-name>`
+
+---
 
 **Features:**
 
@@ -15,9 +41,9 @@ AI-powered voice transcription with Whisper and LLM cleaning. Browser-based reco
 - 🔌 **OpenAI API-compatible** (works with Ollama, LM Studio, OpenAI, or any OpenAI-compatible API)
 - 📋 One-click copy to clipboard
 - 🛠️ **Agentic Workflow** (autonomous tool selection and execution)
+- 🔗 **MCP Server** (expose agent tools via Model Context Protocol)
 
-> **⚠️ Important Note for `checkpoint-agentic-openrouter` Branch:**
-> This branch includes advanced **agentic AI features** with autonomous tool calling (calendar generation, decision records, incident reports).
+> **⚠️ Important:** This branch includes advanced **agentic AI features** with autonomous tool calling.
 > **Small local models struggle with reliable tool/function calling.** For best results, use a **strong cloud-based model** via [OpenRouter](https://openrouter.ai/) or another OpenAI-API compatible vendor. (see .env.example)
 
 Note that the vanilla version uses a smaller language model running on your CPU.
@@ -34,7 +60,7 @@ For example:
 
 **📚 Need help and want to learn more?**
 
-Full courses on AI Engineering are available at [https://www.skool.com/ai-engineer](https://www.skool.com/ai-engineer)
+Full courses on AI Engineering are available at [https://aiengineer.community/join](https://aiengineer.community/join)
 
 ---
 
@@ -89,17 +115,19 @@ Open **two terminals** and run:
 
 ```bash
 cd backend
-uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000 --timeout-keep-alive 600
+uv sync && uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000 --timeout-keep-alive 600
 ```
 
-> **Note:** `--timeout-keep-alive 600` sets a 10-minute timeout for long audio processing
+> **Note:** `uv sync` ensures dependencies are up-to-date (useful after switching branches). `--timeout-keep-alive 600` sets a 10-minute timeout for long audio processing.
 
 **Terminal 2 - Frontend:**
 
 ```bash
 cd frontend
-npm run dev
+npm install && npm run dev
 ```
+
+> **Note:** `npm install` ensures dependencies are up-to-date (useful after switching branches).
 
 **Browser:** Open `http://localhost:3000`
 
