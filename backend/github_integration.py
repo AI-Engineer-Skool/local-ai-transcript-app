@@ -236,16 +236,54 @@ def _format_incident_issue(data: dict[str, Any]) -> tuple[str, str, list[str]]:
     return title, "\n".join(body_parts), labels
 
 
+def _format_consequences(consequences: dict[str, Any] | str | None) -> list[str]:
+    """Format consequences into markdown lines.
+
+    Handles both structured format (from DecisionRecordTool) and plain string.
+    """
+    if not consequences:
+        return ["No consequences listed."]
+
+    # Handle plain string format
+    if isinstance(consequences, str):
+        return [consequences]
+
+    # Handle structured format: {positive: [], negative: [], risks: []}
+    lines = []
+
+    positive = consequences.get("positive", [])
+    if positive:
+        lines.append("**Positive:**")
+        for item in positive:
+            lines.append(f"- {item}")
+        lines.append("")
+
+    negative = consequences.get("negative", [])
+    if negative:
+        lines.append("**Negative:**")
+        for item in negative:
+            lines.append(f"- {item}")
+        lines.append("")
+
+    risks = consequences.get("risks", [])
+    if risks:
+        lines.append("**Risks:**")
+        for item in risks:
+            lines.append(f"- {item}")
+
+    return lines if lines else ["No consequences listed."]
+
+
 def _format_decision_issue(data: dict[str, Any]) -> tuple[str, str, list[str]]:
     """Format architecture decision record as GitHub issue."""
-    title = f"[ADR] {data.get('title', 'Untitled Decision')}"
+    title = f"[ADR] {data.get('title', data.get('decision_title', 'Untitled Decision'))}"
     labels = ["adr", "decision"]
 
     body_parts = [
         "## Summary",
         "",
         f"**Status:** {data.get('status', 'Proposed')}",
-        f"**Date:** {data.get('date', 'Unknown')}",
+        f"**Date:** {data.get('date', data.get('decision_date', 'Unknown'))}",
         "",
         "## Context",
         "",
@@ -257,7 +295,7 @@ def _format_decision_issue(data: dict[str, Any]) -> tuple[str, str, list[str]]:
         "",
         "## Consequences",
         "",
-        data.get("consequences", "No consequences listed."),
+        *_format_consequences(data.get("consequences")),
         "",
     ]
 
