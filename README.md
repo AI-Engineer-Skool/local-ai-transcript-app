@@ -92,6 +92,40 @@ Skip to [Running the App](#running-the-app).
 
 ---
 
+### ☁️ GitHub Codespaces (No Powerful PC Required)
+
+**Don't have a powerful PC?** GitHub Codespaces provides cloud-based development environments that work with this project's devcontainer.
+
+#### 1. Create a Codespace
+
+- Go to the [repository on GitHub](https://github.com/AI-Engineer-Skool/local-ai-transcript-app)
+- Click the green **"Code"** button → **"Codespaces"** tab → **"Create codespace on checkpoint-agentic-openrouter"**
+- The devcontainer enforces at least **8-core / 32GB RAM**.
+- Wait ~5-10 minutes for initial setup
+
+#### 2. Access the App
+
+The devcontainer automatically configures everything. Once ready:
+
+- Ports are auto-forwarded (you'll see notifications for ports 3000, 8000, 11434)
+- Click the port 3000 link or go to the **"Ports"** tab to access the frontend
+
+#### 3. For Localhost-Dependent Code
+
+If you need true `localhost` access (some code expects `localhost:8000`):
+
+1. Install the [GitHub Codespaces extension](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces) in VS Code Desktop
+2. Connect to your running Codespace from VS Code Desktop
+3. Ports will forward to your actual `localhost`
+
+> **💡 Tip:** Stop your Codespace when not in use to conserve free hours. Go to [github.com/codespaces](https://github.com/codespaces) to manage active instances.
+
+> **📺 Video Guide:** Watch the [GitHub Codespaces setup tutorial](https://youtu.be/KkV1O-rXntM) for a walkthrough.
+
+> **🔄 Other Platforms:** Any cloud platform supporting devcontainers (Gitpod, DevPod, etc.) can also be used with this repository's `.devcontainer` configuration.
+
+---
+
 ### 🛠️ Manual Installation
 
 The devcontainer is the easiest supported setup method for beginners.
