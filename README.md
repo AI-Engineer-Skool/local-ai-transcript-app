@@ -48,6 +48,18 @@ This branch provides an AI-assisted learning system for programming fundamentals
 - Click **"Reopen in Container"** in VS Code
 - Or: `Cmd/Ctrl+Shift+P` → **"Dev Containers: Reopen in Container"**
 
+#### ☁️ Alternative: GitHub Codespaces
+
+**Don't have a powerful PC?** Use GitHub Codespaces instead:
+
+- Go to the [repository on GitHub](https://github.com/AI-Engineer-Skool/local-ai-transcript-app)
+- Click **"Code"** → **"Codespaces"** → **"Create codespace on checkpoint-1-fundamentals"**
+- The devcontainer enforces at least **8-core / 32GB RAM**
+
+> **📺 Video Guide:** [GitHub Codespaces setup tutorial](https://youtu.be/KkV1O-rXntM)
+>
+> **🔄 Other Platforms:** Any devcontainer-compatible platform (Gitpod, DevPod, etc.) also works.
+
 ### 3. Create Your Student Profile
 
 Run the student quiz to generate your personalized learning profile:
