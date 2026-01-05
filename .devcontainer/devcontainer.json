@@ -3,7 +3,6 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/ai-transcript-app",
-
   // Configure tool-specific properties
   "customizations": {
     "vscode": {
@@ -27,7 +26,6 @@
       }
     }
   },
-
   // Ports are forwarded in docker-compose.yml
   "forwardPorts": [8000, 3000, 11434],
   "portsAttributes": {
@@ -44,13 +42,10 @@
       "onAutoForward": "silent"
     }
   },
-
   // Install dependencies after container is created
   "postCreateCommand": "bash .devcontainer/post-create.sh",
-
   // Use a non-root user
   "remoteUser": "vscode",
-
   // Features to install
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
@@ -67,12 +62,5 @@
     "ghcr.io/devcontainers/features/github-cli:1": {
       "version": "latest"
     }
-  },
-  
-  // In case Codespaces is used a decent machine is required for local AI
-  "hostRequirements": {
-    "cpus": 8,
-    "memory": "32gb",
-    "storage": "64gb"
   }
 }
