@@ -62,24 +62,19 @@ class TranscriptionService:
 
         print("🤖 Cleaning with LLM...")
 
-        try:
-            response = self.llm_client.chat.completions.create(
-                model=self.llm_model,
-                messages=[
-                    {"role": "system", "content": prompt_to_use},
-                    {"role": "user", "content": text},
-                ],
-                temperature=0.3,
-                max_tokens=200,
-            )
+        response = self.llm_client.chat.completions.create(
+            model=self.llm_model,
+            messages=[
+                {"role": "system", "content": prompt_to_use},
+                {"role": "user", "content": text},
+            ],
+            temperature=0.3,
+            max_tokens=200,
+        )
 
-            cleaned = response.choices[0].message.content.strip()
-            print(f"✨ Cleaned: {cleaned}")
-            return cleaned
-
-        except Exception as e:
-            print(f"⚠️  LLM error: {e}")
-            return text  # Fallback to raw text
+        cleaned = response.choices[0].message.content.strip()
+        print(f"✨ Cleaned: {cleaned}")
+        return cleaned
 
     def transcribe_file(self, audio_file_path: str, use_llm: bool = True) -> dict:
         raw_text = self.transcribe(audio_file_path)

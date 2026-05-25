@@ -3,6 +3,7 @@ import styles from './TranscriptionResults.module.css';
 import type { TranscriptionResultsProps } from '../types';
 import { TextBox } from './TextBox';
 import { Box } from './Box';
+import { ModelQualityWarning } from './ModelQualityWarning';
 
 export function TranscriptionResults({
   rawText,
@@ -43,6 +44,7 @@ export function TranscriptionResults({
       {/* Cleaned transcription (if LLM is enabled and cleaned text exists or is processing) */}
       {useLLM && (cleanedText || isCleaningWithLLM) && (
         <Box header="Cleaned Transcription" icon={Sparkles}>
+          {cleanedText && <ModelQualityWarning />}
           <TextBox
             mode="display"
             variant="default"

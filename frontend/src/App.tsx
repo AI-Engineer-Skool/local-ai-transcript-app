@@ -24,6 +24,9 @@ interface SystemPromptResponse {
   default_prompt: string;
 }
 
+const LLM_CLEANING_ERROR =
+  'LLM cleaning failed. Your transcription is unaffected — check the backend terminal for the detailed error.';
+
 function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -104,7 +107,8 @@ function App() {
 
           if (!cleanResponse.ok) {
             setIsCleaningWithLLM(false);
-            throw new Error(`Cleaning failed: ${cleanResponse.statusText}`);
+            setError(LLM_CLEANING_ERROR);
+            return;
           }
 
           const cleanData = (await cleanResponse.json()) as CleanResponse;
@@ -233,7 +237,8 @@ function App() {
 
           if (!cleanResponse.ok) {
             setIsCleaningWithLLM(false);
-            throw new Error(`Cleaning failed: ${cleanResponse.statusText}`);
+            setError(LLM_CLEANING_ERROR);
+            return;
           }
 
           const cleanData = (await cleanResponse.json()) as CleanResponse;

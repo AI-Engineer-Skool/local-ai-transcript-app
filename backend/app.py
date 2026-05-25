@@ -111,5 +111,10 @@ async def clean_text(request: CleanRequest):
         return {"success": True, "text": cleaned_text}
 
     except Exception as e:
-        print(f"❌ LLM cleaning error: {e}")
-        raise HTTPException(status_code=500, detail=f"Cleaning failed: {str(e)}") from e
+        # Log the full error to the backend terminal; keep the response generic so no
+        # raw error detail leaks to the frontend.
+        print(f"❌ LLM cleaning failed: {e}")
+        raise HTTPException(
+            status_code=502,
+            detail="LLM cleaning failed. Check the backend terminal for details.",
+        ) from e
