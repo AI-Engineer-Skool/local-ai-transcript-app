@@ -122,7 +122,8 @@ If you choose to install manually, you'll need:
 - Python 3.12+, Node.js 24+, [uv](https://docs.astral.sh/uv/), and an LLM server ([Ollama](https://ollama.com/) or [LM Studio](https://lmstudio.ai/))
 - Copy `backend/.env.example` to `backend/.env` and configure
 - Install dependencies with `uv sync` (backend) and `npm install` (frontend)
-- Start your LLM server and pull models: `ollama pull llama3.1:8b`
+- Start your LLM server and pull the model from `.env.example`: `ollama pull gemma3:4b`
+  (using a different model? Set `LLM_MODEL` in `backend/.env` to exactly the name `ollama list` shows)
 
 **For detailed setup, use the devcontainer above.**
 
@@ -202,8 +203,15 @@ Configure Docker Desktop resources:
 
 **LLM errors:**
 
+- The backend checks the LLM at startup: read the ⚠️ warnings in its terminal first, they include the fix
+- `model 'gemma3:4b' not found`: Ollama is running but doesn't have that model. Download it:
+  - Dev container / Codespaces: `bash .devcontainer/pull-model.sh`
+  - Manual install: `ollama pull gemma3:4b`
+  - Or set `LLM_MODEL` in `backend/.env` to a model you already have. The name must match exactly (`gemma3` is not `gemma3:4b`)
+- Keep Ollama up to date, older versions can fail to download or run newer models:
+  - Dev container / Codespaces: pull the latest version of this repo, then run **"Dev Containers: Rebuild Container"** (downloaded models are kept)
+  - Manual install: update Ollama from [ollama.com/download](https://ollama.com/download)
 - Make sure Ollama service is running (it auto-starts with devcontainer)
-- Check model is downloaded: Model downloads automatically during devcontainer setup
 - Transcription still works without LLM (raw Whisper only)
 
 **LLM is slow:**

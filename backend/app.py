@@ -6,6 +6,7 @@ from typing import Annotated
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from openai import NotFoundError
 from pydantic import BaseModel
 
 from transcription import TranscriptionService
@@ -114,6 +115,9 @@ async def clean_text(request: CleanRequest):
         # Log the full error to the backend terminal; keep the response generic so no
         # raw error detail leaks to the frontend.
         print(f"❌ LLM cleaning failed: {e}")
+        if isinstance(e, NotFoundError):
+            # A 404 usually means LLM_MODEL isn't on the server: print how to fix it
+            service.check_llm_model()
         raise HTTPException(
             status_code=502,
             detail="LLM cleaning failed. Check the backend terminal for details.",

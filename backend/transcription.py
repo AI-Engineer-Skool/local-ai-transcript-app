@@ -4,6 +4,7 @@ Uses OpenAI API format, compatible with Ollama, OpenAI, LM Studio, and other pro
 Configuration is loaded from .env file.
 """
 
+import json
 from pathlib import Path
 
 from faster_whisper import WhisperModel
@@ -12,6 +13,10 @@ from openai import OpenAI
 # Edit system_prompt.txt to change how the LLM cleans transcriptions
 PROMPT_FILE = Path(__file__).parent / "system_prompt.txt"
 SYSTEM_PROMPT = PROMPT_FILE.read_text().strip()
+
+# Used to recognise an Ollama server, so we can print the exact download command
+OLLAMA_DEFAULT_PORT = "11434"
+MAX_MODELS_SHOWN = 10
 
 
 class TranscriptionService:
@@ -30,14 +35,42 @@ class TranscriptionService:
 
         print(f"🔄 Connecting to LLM at {llm_base_url}...")
         self.llm_client = OpenAI(base_url=llm_base_url, api_key=llm_api_key)
+        self.llm_base_url = llm_base_url
         self.llm_model = llm_model
 
+        if self.check_llm_model():
+            print(f"✅ Connected to LLM API, model '{llm_model}' is available!")
+
+    def check_llm_model(self) -> bool:
+        """Return True if the LLM server has LLM_MODEL; otherwise print how to fix it.
+
+        Being able to reach the server isn't enough: a model that was never
+        downloaded only shows up later, as a 404 on the first cleaning request.
+        """
         try:
-            self.llm_client.models.list()
-            print("✅ Connected to LLM API!")
+            available_models = sorted(
+                model.id for model in self.llm_client.models.list()
+            )
         except Exception as e:
             print(f"⚠️  Warning: Could not connect to LLM: {e}")
-            print(f"   Make sure your LLM server is running at {llm_base_url}")
+            print(f"   Make sure your LLM server is running at {self.llm_base_url}")
+            return False
+
+        # Ollama treats a name without a tag ("gemma3") as "gemma3:latest"
+        if {self.llm_model, f"{self.llm_model}:latest"} & set(available_models):
+            return True
+
+        shown = ", ".join(available_models[:MAX_MODELS_SHOWN]) or "none yet"
+        if len(available_models) > MAX_MODELS_SHOWN:
+            shown += ", ..."
+        print(f"⚠️  Warning: The LLM server has no model named '{self.llm_model}'")
+        print(f"   Models it has: {shown}")
+        if OLLAMA_DEFAULT_PORT in self.llm_base_url:
+            ollama_url = self.llm_base_url.rstrip("/").removesuffix("/v1")
+            pull_request = json.dumps({"model": self.llm_model})
+            print(f"   Download it:   curl {ollama_url}/api/pull -d '{pull_request}'")
+        print("   Or set LLM_MODEL in backend/.env to a model the server has.")
+        return False
 
     def transcribe(self, audio_file):
         print("🔄 Transcribing...")

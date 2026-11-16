@@ -27,7 +27,7 @@ services:
       - ollama
 
   ollama:
-    image: ollama/ollama:0.12.9
+    image: ollama/ollama:0.40.16
     volumes:
       # Store models in a named volume for persistence
       - ai-transcript-ollama-models:/root/.ollama
